@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:while_app/presentation/constants.dart';
-import 'package:while_app/presentation/constants.dart';
 
 class Circle extends CustomPainter {
   late double offset;

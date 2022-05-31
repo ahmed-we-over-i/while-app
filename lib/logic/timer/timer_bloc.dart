@@ -19,7 +19,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
       emit(TimerPickedState(event.value));
     } else {
       if (state is TimerFinishedState) {
-        emit(const TimerFinishedState());
+        emit(const TimerFinishedState(true));
       } else {
         emit(const TimerInitialState());
       }
@@ -34,7 +34,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     if (event.value > 0) {
       emit(TimerLoadedState(event.value));
     } else {
-      emit(const TimerFinishedState());
+      emit(const TimerFinishedState(true));
     }
   }
 
@@ -47,6 +47,6 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   }
 
   void _onFinished(TimerFinishedEvent event, Emitter<TimerState> emit) {
-    emit(const TimerFinishedState());
+    emit(TimerFinishedState(event.soundVibration));
   }
 }

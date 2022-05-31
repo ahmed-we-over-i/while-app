@@ -27,5 +27,10 @@ class TimerLoadedChangeEvent extends TimerEvent {
 }
 
 class TimerFinishedEvent extends TimerEvent {
-  const TimerFinishedEvent() : super(0);
+  final bool soundVibration;
+
+  const TimerFinishedEvent({this.soundVibration = false}) : super(0);
+
+  @override
+  List<Object?> get props => [value];
 }

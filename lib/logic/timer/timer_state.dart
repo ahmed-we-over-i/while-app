@@ -31,5 +31,10 @@ class TimerLoadedChangeState extends TimerState {
 }
 
 class TimerFinishedState extends TimerState {
-  const TimerFinishedState() : super(0);
+  final bool soundVibration;
+
+  const TimerFinishedState(this.soundVibration) : super(0);
+
+  @override
+  List<Object?> get props => [value, soundVibration];
 }

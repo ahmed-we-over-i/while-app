@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
+import 'package:while_app/presentation/constants.dart';
 
 class BottomOverlay extends StatelessWidget {
   const BottomOverlay({Key? key, required this.offset, required this.height}) : super(key: key);
@@ -16,9 +17,9 @@ class BottomOverlay extends StatelessWidget {
           valueListenable: offset,
           builder: (BuildContext context, double value, Widget? child) {
             return Container(
-              margin: EdgeInsets.only(top: value + height / 2),
+              margin: EdgeInsets.only(top: value + height / 2 + circleRadius),
               width: double.infinity,
-              height: height / 2,
+              height: height / 2 - circleRadius,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,

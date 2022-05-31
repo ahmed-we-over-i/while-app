@@ -3,11 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:while_app/data/repositories/settingsRepository.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:while_app/presentation/bgService.dart';
 import 'package:while_app/presentation/screens/timerScreen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Hive.initFlutter();
+  await initializeService();
   runApp(const MyApp());
 }
 

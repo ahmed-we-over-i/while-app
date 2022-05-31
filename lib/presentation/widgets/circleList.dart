@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:while_app/presentation/constants.dart';
 import 'package:while_app/presentation/designs/circle.dart';
 
 class CircleList extends StatelessWidget {
@@ -11,13 +12,13 @@ class CircleList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 50 + height / 2),
-        for (int i = 1; i <= 90; i++)
+        Container(height: (height / 2) + spaceBetweenDots + circleRadius),
+        for (int i = 1; i <= maxTime; i++)
           Container(
-            margin: const EdgeInsets.all(8),
-            height: 16,
+            margin: const EdgeInsets.only(bottom: spaceBetweenDots),
+            height: circleRadius * 2,
             width: double.infinity,
-            child: CustomPaint(painter: Circle(0, 1)),
+            child: CustomPaint(painter: Circle(circleRadius, 1)),
           ),
         SizedBox(height: height / 2),
       ],
