@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:while_app/data/repositories/historyRepository.dart';
 import 'package:while_app/data/repositories/settingsRepository.dart';
+import 'package:while_app/logic/history/history_bloc.dart';
+import 'package:while_app/logic/session/session_bloc.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:while_app/presentation/bgService.dart';
-import 'package:while_app/presentation/screens/timerScreen.dart';
+import 'package:while_app/presentation/screens/timer/timerScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await initializeService();
   runApp(const MyApp());
 }
 
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => SettingsRepository(), lazy: false),
+        RepositoryProvider(create: (context) => HistoryRepository()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -29,7 +31,9 @@ class MyApp extends StatelessWidget {
             create: (context) => SettingsBloc(settingsRepository: context.read<SettingsRepository>())..add(SettingsFetchEvent()),
             lazy: false,
           ),
-          BlocProvider<TimerBloc>(create: (context) => TimerBloc(), lazy: false),
+          BlocProvider<HistoryBloc>(create: (context) => HistoryBloc(historyRepository: context.read<HistoryRepository>())),
+          BlocProvider<SessionBloc>(create: (context) => SessionBloc(historyRepository: context.read<HistoryRepository>())),
+          BlocProvider<TimerBloc>(create: (context) => TimerBloc(sessionBloc: context.read<SessionBloc>()), lazy: false),
         ],
         child: MaterialApp(
           title: 'While',

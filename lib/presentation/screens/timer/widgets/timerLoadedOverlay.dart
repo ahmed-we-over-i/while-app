@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:while_app/logic/session/session_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
 import 'package:while_app/presentation/constants.dart';
 import 'package:while_app/presentation/designs/circle.dart';
@@ -73,6 +73,7 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
           secondsRemaining--;
         });
       } else {
+        context.read<SessionBloc>().add(SessionIncrementEvent());
         _restartTimer();
       }
     });
@@ -101,35 +102,25 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
 
-    print(state);
-
-    final service = FlutterBackgroundService();
-    var isRunning = await service.isRunning();
-
     if (state == AppLifecycleState.paused) {
       countdownTimer?.cancel();
 
       final Duration _duration = finishingTime.difference(DateTime.now());
-
-      if (!isRunning) {
-        await service.startService();
-      }
-
-      service.invoke("startService", {'seconds': _duration.inSeconds});
     }
     if (state == AppLifecycleState.resumed) {
       int timeDifference = finishingTime.difference(DateTime.now()).inSeconds;
 
       secondsRemaining = timeDifference % 60;
-      countdownValue = (timeDifference / 60).ceil() - 1;
+
+      final int newCountdownValue = (timeDifference / 60).ceil() - 1;
+
+      context.read<SessionBloc>().add(SessionIncrementEvent(num: countdownValue - newCountdownValue));
+
+      countdownValue = newCountdownValue;
 
       _checkCountdownAction(wasPaused: true);
       countdownTimer?.cancel();
       countdownTimer = _startCountdownTimer();
-
-      if (isRunning) {
-        service.invoke("stopService");
-      }
     }
   }
 

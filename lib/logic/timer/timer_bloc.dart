@@ -1,12 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:while_app/logic/session/session_bloc.dart';
 
 part 'timer_event.dart';
 part 'timer_state.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
-  TimerBloc() : super(const TimerInitialState()) {
+  final SessionBloc _sessionBloc;
+
+  TimerBloc({required sessionBloc})
+      : _sessionBloc = sessionBloc,
+        super(const TimerInitialState()) {
     on<TimerChangeEvent>(_onChange);
     on<TimerLoadingEvent>(_onLoading);
     on<TimerLoadedEvent>(_onLoaded);
@@ -19,7 +24,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
       emit(TimerPickedState(event.value));
     } else {
       if (state is TimerFinishedState) {
-        emit(const TimerFinishedState(true));
+        add(TimerFinishedEvent(soundVibration: true));
       } else {
         emit(const TimerInitialState());
       }
@@ -34,7 +39,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     if (event.value > 0) {
       emit(TimerLoadedState(event.value));
     } else {
-      emit(const TimerFinishedState(true));
+      add(TimerFinishedEvent(soundVibration: true));
     }
   }
 
@@ -47,6 +52,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   }
 
   void _onFinished(TimerFinishedEvent event, Emitter<TimerState> emit) {
+    _sessionBloc.add(SessionEndEvent());
     emit(TimerFinishedState(event.soundVibration));
   }
 }

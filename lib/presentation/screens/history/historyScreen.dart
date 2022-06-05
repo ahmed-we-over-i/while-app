@@ -1,10 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:while_app/presentation/screens/history/widgets/calendarWidget.dart';
+import 'package:while_app/presentation/screens/history/widgets/sessionsListWidget.dart';
 
-class CalendarScreen extends StatelessWidget {
-  const CalendarScreen({Key? key}) : super(key: key);
+class HistoryScreen extends StatelessWidget {
+  const HistoryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,46 +32,31 @@ class CalendarScreen extends StatelessWidget {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         leading: Material(
-          color: Colors.transparent,
+          color: Colors.white,
           child: IconButton(
             icon: const Icon(Icons.close, size: 18, color: Colors.grey),
             onPressed: () => Navigator.of(context).pop(),
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
           ),
         ),
         middle: const Text('History'),
         padding: const EdgeInsetsDirectional.only(bottom: 10, start: 10, end: 10),
         backgroundColor: Colors.white,
       ),
-      child: const Material(child: SafeArea(child: CalendarWidget())),
-    );
-  }
-}
-
-class CalendarWidget extends StatefulWidget {
-  const CalendarWidget({Key? key}) : super(key: key);
-
-  @override
-  State<CalendarWidget> createState() => _CalendarWidgetState();
-}
-
-class _CalendarWidgetState extends State<CalendarWidget> {
-  DateTime current = DateTime.now();
-
-  DateTime min = DateTime.now()..subtract(const Duration(days: 365 * 20));
-  DateTime max = DateTime.now()..add(const Duration(days: 365 * 20));
-
-  @override
-  Widget build(BuildContext context) {
-    return CalendarDatePicker(
-      initialDate: current,
-      firstDate: min,
-      lastDate: max,
-      onDateChanged: (value) {
-        setState(() {
-          current = value;
-        });
-      },
-      selectableDayPredicate: (DateTime val) => true,
+      child: Material(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CalendarWidget(),
+                SizedBox(height: 40),
+                SessionsListWidget(),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

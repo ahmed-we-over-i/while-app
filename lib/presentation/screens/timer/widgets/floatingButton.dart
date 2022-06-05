@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:while_app/presentation/enums.dart';
-import 'package:while_app/presentation/screens/calendarScreen.dart';
-import 'package:while_app/presentation/screens/settingsScreen.dart';
+import 'package:while_app/presentation/screens/history/historyScreen.dart';
+import 'package:while_app/presentation/screens/settings/settingsScreen.dart';
 
 class FloatingButton extends StatefulWidget {
   const FloatingButton({Key? key, required this.menuValue}) : super(key: key);
@@ -69,7 +69,7 @@ class _FloatingButtonState extends State<FloatingButton> with SingleTickerProvid
                     margin: EdgeInsets.only(bottom: _animation.value * 60),
                     child: IconButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CalendarScreen()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HistoryScreen()));
                       },
                       padding: const EdgeInsets.all(6),
                       constraints: const BoxConstraints(),

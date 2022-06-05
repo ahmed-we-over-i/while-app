@@ -8,12 +8,12 @@ import 'package:while_app/logic/timer/timer_bloc.dart';
 import 'package:while_app/presentation/constants.dart';
 import 'package:while_app/presentation/designs/background.dart';
 import 'package:while_app/presentation/enums.dart';
-import 'package:while_app/presentation/widgets/bottomOverlay.dart';
-import 'package:while_app/presentation/widgets/circleList.dart';
-import 'package:while_app/presentation/widgets/floatingButton.dart';
-import 'package:while_app/presentation/widgets/timerLoadedOverlay.dart';
-import 'package:while_app/presentation/widgets/timerLoadingOverlay.dart';
-import 'package:while_app/presentation/widgets/timerTexts.dart';
+import 'package:while_app/presentation/screens/timer/widgets/bottomOverlay.dart';
+import 'package:while_app/presentation/screens/timer/widgets/circleList.dart';
+import 'package:while_app/presentation/screens/timer/widgets/floatingButton.dart';
+import 'package:while_app/presentation/screens/timer/widgets/timerLoadedOverlay.dart';
+import 'package:while_app/presentation/screens/timer/widgets/timerLoadingOverlay.dart';
+import 'package:while_app/presentation/screens/timer/widgets/timerTexts.dart';
 
 class TimerScreen extends StatefulWidget {
   const TimerScreen({Key? key}) : super(key: key);

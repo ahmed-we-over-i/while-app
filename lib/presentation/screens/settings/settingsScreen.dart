@@ -37,6 +37,8 @@ class SettingScreen extends StatelessWidget {
           child: IconButton(
             icon: const Icon(Icons.close, size: 18, color: Colors.grey),
             onPressed: () => Navigator.of(context).pop(),
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
           ),
         ),
         middle: const Text('Settings'),
