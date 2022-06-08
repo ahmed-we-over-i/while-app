@@ -1,6 +1,6 @@
 import 'package:flutter/rendering.dart';
 
-BoxDecoration backgroundDecoration() {
+BoxDecoration BackgroundDecoration() {
   return const BoxDecoration(
     gradient: LinearGradient(
       begin: Alignment.topCenter,

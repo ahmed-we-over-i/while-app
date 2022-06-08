@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:hive/hive.dart';
 
 class HistoryRepository {
@@ -5,7 +7,7 @@ class HistoryRepository {
 
   bool fetched = false;
 
-  Future<void> fetchHistory() async {
+  Future<Map<DateTime, Map<DateTime, int>>> fetchHistory() async {
     if (!fetched) {
       var box = await Hive.openBox('myBox');
       final Map<DateTime, dynamic> temp = Map<DateTime, dynamic>.from(box.get('history') ?? {});
@@ -16,6 +18,8 @@ class HistoryRepository {
 
       fetched = true;
     }
+
+    return _history;
   }
 
   Future<Map<DateTime, int>> fetchSession(DateTime dateTime) async {

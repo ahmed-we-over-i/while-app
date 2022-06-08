@@ -12,9 +12,10 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       : _historyRepository = historyRepository,
         super(HistoryInitialState()) {
     on<HistoryLoadEvent>((event, emit) async {
+      final history = await _historyRepository.fetchHistory();
       final sessions = await _historyRepository.fetchSession(event.dateTime);
 
-      emit(HistoryLoadedState(dateTime: event.dateTime, sessions: sessions));
+      emit(HistoryLoadedState(dateTime: event.dateTime, sessions: sessions, history: history));
     });
   }
 }

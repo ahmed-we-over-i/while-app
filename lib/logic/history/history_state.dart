@@ -12,9 +12,10 @@ class HistoryInitialState extends HistoryState {}
 class HistoryLoadedState extends HistoryState {
   final DateTime dateTime;
   final Map<DateTime, int> sessions;
+  final Map<DateTime, Map<DateTime, int>> history;
 
-  HistoryLoadedState({required this.dateTime, required this.sessions});
+  HistoryLoadedState({required this.dateTime, required this.sessions, required this.history});
 
   @override
-  List<Object> get props => [dateTime, sessions];
+  List<Object> get props => [dateTime, sessions, history];
 }

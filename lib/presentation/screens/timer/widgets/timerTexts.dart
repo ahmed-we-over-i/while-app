@@ -4,13 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
 
-// ignore: must_be_immutable
-class TimerTexts extends StatelessWidget {
+class TimerTexts extends StatefulWidget {
   TimerTexts({Key? key, required this.height}) : super(key: key);
 
   final double height;
 
+  @override
+  State<TimerTexts> createState() => _TimerTextsState();
+}
+
+class _TimerTextsState extends State<TimerTexts> {
   Timer? changeOpacity;
+
   ValueNotifier textActive = ValueNotifier(true);
 
   _showTime() {
@@ -38,7 +43,7 @@ class TimerTexts extends StatelessWidget {
           listenWhen: (previous, current) => ((previous is! TimerLoadedState) && (current is TimerLoadedState)),
           builder: (context, state) {
             return Padding(
-              padding: EdgeInsets.only(left: 50, top: height / 2 - 150, right: 50),
+              padding: EdgeInsets.only(left: 50, top: widget.height / 2 - 150, right: 50),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -80,54 +80,70 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         const Divider(color: Colors.grey, thickness: 0.3, height: 0.3),
         Container(
           color: Colors.white,
-          padding: EdgeInsets.only(top: 16, bottom: 20),
-          child: TableCalendar(
-            firstDay: min,
-            lastDay: max,
-            focusedDay: current,
-            availableCalendarFormats: {CalendarFormat.month: 'month'},
-            headerStyle: HeaderStyle(
-              titleCentered: true,
-              headerPadding: EdgeInsets.symmetric(vertical: 4),
-              leftChevronIcon: Container(
-                decoration: BoxDecoration(color: Colors.black.withOpacity(0.06), borderRadius: BorderRadius.circular(30)),
-                padding: EdgeInsets.all(6),
-                child: Icon(Icons.chevron_left, color: Colors.black),
-              ),
-              rightChevronIcon: Container(
-                decoration: BoxDecoration(color: Colors.black.withOpacity(0.06), borderRadius: BorderRadius.circular(30)),
-                padding: EdgeInsets.all(6),
-                child: Icon(Icons.chevron_right, color: Colors.black),
-              ),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    width: 0.5,
-                    color: Colors.black.withOpacity(0.2),
+          padding: EdgeInsets.only(top: 16, bottom: 14, left: 10, right: 10),
+          child: BlocBuilder<HistoryBloc, HistoryState>(
+            builder: (context, state) {
+              return TableCalendar(
+                calendarBuilders: CalendarBuilders(),
+                firstDay: min,
+                lastDay: max,
+                focusedDay: current,
+                availableCalendarFormats: {CalendarFormat.month: 'month'},
+                headerStyle: HeaderStyle(
+                  titleCentered: true,
+                  headerPadding: EdgeInsets.symmetric(vertical: 4),
+                  leftChevronIcon: Container(
+                    decoration: BoxDecoration(color: Colors.black.withOpacity(0.04), borderRadius: BorderRadius.circular(30)),
+                    padding: EdgeInsets.all(6),
+                    child: Icon(Icons.chevron_left, color: Colors.black54),
+                  ),
+                  rightChevronIcon: Container(
+                    decoration: BoxDecoration(color: Colors.black.withOpacity(0.04), borderRadius: BorderRadius.circular(30)),
+                    padding: EdgeInsets.all(6),
+                    child: Icon(Icons.chevron_right, color: Colors.black54),
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 0.5,
+                        color: Colors.black.withOpacity(0.2),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            daysOfWeekStyle: DaysOfWeekStyle(
-              dowTextFormatter: (date, locale) {
-                return DateFormat('EE').format(date)[0];
-              },
-              weekdayStyle: TextStyle(fontWeight: FontWeight.w500),
-              weekendStyle: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            headerVisible: false,
-            rowHeight: 50,
-            daysOfWeekHeight: 45,
-            calendarStyle: CalendarStyle(
-              todayDecoration: BoxDecoration(color: Colors.transparent, shape: BoxShape.circle, border: Border.all(color: Colors.black87)),
-              selectedDecoration: BoxDecoration(color: Colors.black87, shape: BoxShape.circle, border: Border.all(color: Colors.black87)),
-              todayTextStyle: TextStyle(color: Colors.black87),
-              withinRangeTextStyle: TextStyle(color: Colors.black87),
-              outsideDaysVisible: false,
-            ),
-            selectedDayPredicate: (datetime) => datetime.year == selected.year && datetime.month == selected.month && datetime.day == selected.day,
-            onDaySelected: (_, datetime) {
-              onSelectedChanged(DateTime(datetime.year, datetime.month, datetime.day));
+                daysOfWeekStyle: DaysOfWeekStyle(
+                  dowTextFormatter: (date, locale) {
+                    return DateFormat('EE').format(date)[0];
+                  },
+                  weekdayStyle: TextStyle(fontWeight: FontWeight.w500),
+                  weekendStyle: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                headerVisible: false,
+                rowHeight: 50,
+                daysOfWeekHeight: 45,
+                calendarStyle: CalendarStyle(
+                  todayDecoration: BoxDecoration(color: Colors.transparent, shape: BoxShape.circle, border: Border.all(color: Colors.black87)),
+                  selectedDecoration: BoxDecoration(color: Colors.black87, shape: BoxShape.circle, border: Border.all(color: Colors.black87)),
+                  todayTextStyle: TextStyle(color: Colors.black87),
+                  withinRangeTextStyle: TextStyle(color: Colors.black87),
+                  holidayTextStyle: TextStyle(color: Colors.black87),
+                  outsideDaysVisible: false,
+                  markerDecoration: BoxDecoration(color: Colors.black87, shape: BoxShape.circle, border: Border.all(color: Colors.black87)),
+                  markerSizeScale: 0.15,
+                  markersAnchor: 1,
+                  markersMaxCount: 1,
+                ),
+                selectedDayPredicate: (datetime) => datetime.year == selected.year && datetime.month == selected.month && datetime.day == selected.day,
+                onDaySelected: (_, datetime) {
+                  onSelectedChanged(DateTime(datetime.year, datetime.month, datetime.day));
+                },
+                eventLoader: (datetime) {
+                  if (state is HistoryLoadedState && state.history.containsKey(DateTime(datetime.year, datetime.month, datetime.day))) {
+                    return state.history[DateTime(datetime.year, datetime.month, datetime.day)]!.values.toList();
+                  }
+                  return [];
+                },
+              );
             },
           ),
         ),

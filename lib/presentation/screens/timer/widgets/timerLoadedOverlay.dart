@@ -5,6 +5,7 @@ import 'package:while_app/logic/session/session_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
 import 'package:while_app/presentation/constants.dart';
 import 'package:while_app/presentation/designs/circle.dart';
+import 'package:while_app/presentation/variables.dart';
 
 class TimerLoadedOverlay extends StatefulWidget {
   const TimerLoadedOverlay({Key? key, required this.height, required this.scrollController, required this.blockChange}) : super(key: key);
@@ -37,8 +38,7 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
   }
 
   _animateOffsetToNewPosition() {
-    double newOffset = ((circleRadius * 2) + spaceBetweenDots) * countdownValue;
-    if (newOffset <= 0) newOffset = 0;
+    double newOffset = calculateActualOffset(countdownValue);
     widget.blockChange.call();
     widget.scrollController.animateTo(newOffset, duration: const Duration(milliseconds: 200), curve: Curves.linear);
     _animationController.forward();

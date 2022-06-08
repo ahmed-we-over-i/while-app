@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:while_app/presentation/screens/history/widgets/calendarWidget.dart';
@@ -9,51 +8,33 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
-      return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(65),
-          child: SizedBox(
-            height: 65,
-            child: CupertinoNavigationBar(
-              leading: IconButton(
-                icon: const Icon(Icons.close, size: 18, color: Colors.grey),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              middle: const Text('History'),
-              padding: const EdgeInsetsDirectional.only(top: 5, start: 10, end: 10),
-              backgroundColor: Colors.white,
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(55),
+        child: SizedBox(
+          height: 55,
+          child: CupertinoNavigationBar(
+            leading: IconButton(
+              icon: const Icon(Icons.close, size: 18, color: Colors.grey),
+              onPressed: () => Navigator.of(context).pop(),
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
             ),
+            middle: const Text('History'),
+            padding: const EdgeInsetsDirectional.only(top: 5, start: 10, end: 10),
+            backgroundColor: Colors.white,
           ),
         ),
-        body: const SafeArea(child: CalendarWidget()),
-      );
-    }
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        leading: Material(
-          color: Colors.white,
-          child: IconButton(
-            icon: const Icon(Icons.close, size: 18, color: Colors.grey),
-            onPressed: () => Navigator.of(context).pop(),
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-          ),
-        ),
-        middle: const Text('History'),
-        padding: const EdgeInsetsDirectional.only(bottom: 10, start: 10, end: 10),
-        backgroundColor: Colors.white,
       ),
-      child: Material(
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                CalendarWidget(),
-                SizedBox(height: 40),
-                SessionsListWidget(),
-              ],
-            ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              CalendarWidget(),
+              SizedBox(height: 40),
+              SessionsListWidget(),
+              SizedBox(height: 40),
+            ],
           ),
         ),
       ),

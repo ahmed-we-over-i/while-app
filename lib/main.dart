@@ -12,6 +12,7 @@ import 'package:while_app/presentation/screens/timer/timerScreen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+
   runApp(const MyApp());
 }
 
@@ -38,9 +39,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: 'While',
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
+          theme: ThemeData(fontFamily: 'Apercu'),
           home: const TimerScreen(),
         ),
       ),
