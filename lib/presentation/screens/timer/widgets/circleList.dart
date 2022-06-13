@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:while_app/presentation/constants.dart';
-import 'package:while_app/presentation/designs/circle.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:while_app/logic/settings/settings_bloc.dart';
+import 'package:while_app/presentation/screens/timer/designs/circle.dart';
+import 'package:while_app/presentation/screens/colors.dart';
+import 'package:while_app/presentation/screens/timer/misc/constants.dart';
 
 class CircleList extends StatelessWidget {
   const CircleList({Key? key, required this.height}) : super(key: key);
@@ -18,7 +21,18 @@ class CircleList extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: spaceBetweenDots),
             height: circleRadius * 2,
             width: double.infinity,
-            child: CustomPaint(painter: Circle(circleRadius, 1)),
+            child: BlocBuilder<SettingsBloc, SettingsState>(
+              builder: (context, state) {
+                if (state is SettingsLoadedState) {
+                  CustomTheme customTheme = GetColors(state.settings.theme, state.settings.mode);
+
+                  return CustomPaint(
+                    painter: Circle(circleRadius, 1, customTheme.foregroundColor),
+                  );
+                }
+                return SizedBox.shrink();
+              },
+            ),
           ),
         SizedBox(height: height / 2),
       ],

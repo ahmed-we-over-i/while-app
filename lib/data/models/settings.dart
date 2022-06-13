@@ -1,16 +1,7 @@
 import 'dart:convert';
 
 import 'package:hive_flutter/hive_flutter.dart';
-
-enum ColorMode {
-  light,
-  dark,
-}
-
-enum ColorTheme {
-  grey,
-  blue,
-}
+import 'package:while_app/presentation/screens/timer/misc/enums.dart';
 
 class Settings extends HiveObject {
   bool sound;

@@ -16,6 +16,13 @@ void main() async {
   runApp(const MyApp());
 }
 
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
+  }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -39,8 +46,11 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: 'While',
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(fontFamily: 'Apercu'),
-          home: const TimerScreen(),
+          scrollBehavior: MyCustomScrollBehavior(),
+          home: Theme(
+            child: const TimerScreen(),
+            data: ThemeData(fontFamily: 'Apercu'),
+          ),
         ),
       ),
     );

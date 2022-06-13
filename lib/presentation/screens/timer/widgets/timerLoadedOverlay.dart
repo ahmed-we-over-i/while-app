@@ -2,10 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:while_app/logic/session/session_bloc.dart';
+import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
-import 'package:while_app/presentation/constants.dart';
-import 'package:while_app/presentation/designs/circle.dart';
-import 'package:while_app/presentation/variables.dart';
+import 'package:while_app/presentation/screens/timer/designs/circle.dart';
+import 'package:while_app/presentation/screens/colors.dart';
+import 'package:while_app/presentation/screens/timer/misc/variables.dart';
 
 class TimerLoadedOverlay extends StatefulWidget {
   const TimerLoadedOverlay({Key? key, required this.height, required this.scrollController, required this.blockChange}) : super(key: key);
@@ -135,29 +136,40 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: _firstTransition,
-      builder: (context, value, child) {
-        if (value == false) {
-          return AnimatedBuilder(
-            animation: _animationController,
-            builder: (context, child) {
+    return BlocBuilder<SettingsBloc, SettingsState>(
+      builder: (context, state) {
+        if (state is SettingsLoadedState) {
+          CustomTheme customTheme = GetColors(state.settings.theme, state.settings.mode);
+
+          return ValueListenableBuilder(
+            valueListenable: _firstTransition,
+            builder: (context, value, child) {
+              if (value == false) {
+                return AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (context, child) {
+                    return SizedBox(
+                      width: double.infinity,
+                      child: CustomPaint(painter: Circle(calculateCircleDrop(widget.height, _animationController.value), 1, customTheme.foregroundColor)),
+                    );
+                  },
+                );
+              }
               return SizedBox(
                 width: double.infinity,
-                child: CustomPaint(painter: Circle((-1 * ((widget.height / 2))) + (((circleRadius * 2) + spaceBetweenDots) * _animationController.value), 1)),
+                child: CustomPaint(
+                  painter: Circle(
+                    calculateLoadedCirclePosition(widget.height, secondsRemaining),
+                    secondsRemaining < 10 ? (10 / 60) : secondsRemaining / 60,
+                    customTheme.foregroundColor,
+                  ),
+                ),
               );
             },
           );
         }
-        return SizedBox(
-          width: double.infinity,
-          child: CustomPaint(
-            painter: Circle(
-              -1 * ((widget.height / 2) - ((circleRadius * 2) + spaceBetweenDots)) * (secondsRemaining / 60),
-              secondsRemaining < 15 ? 0.25 : secondsRemaining / 60,
-            ),
-          ),
-        );
+
+        return SizedBox.shrink();
       },
     );
   }

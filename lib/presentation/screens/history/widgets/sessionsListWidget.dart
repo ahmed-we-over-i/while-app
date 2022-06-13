@@ -3,9 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:while_app/logic/history/history_bloc.dart';
 import 'package:collection/collection.dart';
+import 'package:while_app/presentation/screens/timer/misc/enums.dart';
+import 'package:while_app/presentation/widgets/MyDivider.dart';
 
 class SessionsListWidget extends StatelessWidget {
-  const SessionsListWidget({Key? key}) : super(key: key);
+  final ColorMode mode;
+
+  SessionsListWidget({Key? key, required this.mode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,28 +25,28 @@ class SessionsListWidget extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Divider(color: Colors.grey, thickness: 0.3, height: 0.3),
+                  MyDivider(mode: mode),
                   Container(
-                    color: Colors.white,
+                    color: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
                     padding: const EdgeInsets.all(20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(DateFormat('EEE, d MMM').format(state.dateTime)),
-                        Text('${hours}h ${minutes}m', style: TextStyle(color: Colors.grey)),
+                        Text(DateFormat('EEE, d MMM').format(state.dateTime), style: TextStyle(color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
+                        Text('${hours}h ${minutes}m', style: TextStyle(color: (mode == ColorMode.light) ? Colors.black54 : Colors.white60)),
                       ],
                     ),
                   ),
-                  const Divider(color: Colors.grey, thickness: 0.3, height: 0.3),
+                  MyDivider(mode: mode),
                   if (state.sessions.isNotEmpty)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 20, top: 20, bottom: 12),
-                          child: Text('Sessions'),
+                          padding: const EdgeInsets.only(left: 20, top: 25, bottom: 14),
+                          child: Text('Sessions', style: TextStyle(color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                         ),
-                        const Divider(color: Colors.grey, thickness: 0.3, height: 0.3),
+                        MyDivider(mode: mode),
                         ...state.sessions.keys.map((key) {
                           final int wTotal = state.sessions[key] ?? 0;
                           final int wHours = (wTotal / 60).floor();
@@ -51,13 +55,13 @@ class SessionsListWidget extends StatelessWidget {
                           return Column(
                             children: [
                               Container(
-                                color: Colors.white,
+                                color: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
                                 padding: const EdgeInsets.all(20),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(DateFormat('hh : mm').format(key)),
-                                    Text('${wHours}h ${wMinutes}m', style: TextStyle(color: Colors.grey)),
+                                    Text(DateFormat('hh : mm').format(key), style: TextStyle(color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
+                                    Text('${wHours}h ${wMinutes}m', style: TextStyle(color: (mode == ColorMode.light) ? Colors.black54 : Colors.white60)),
                                   ],
                                 ),
                               ),

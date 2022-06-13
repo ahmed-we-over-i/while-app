@@ -3,9 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:while_app/logic/history/history_bloc.dart';
+import 'package:while_app/presentation/screens/timer/misc/enums.dart';
+import 'package:while_app/presentation/widgets/MyDivider.dart';
 
 class CalendarWidget extends StatefulWidget {
-  const CalendarWidget({Key? key}) : super(key: key);
+  final ColorMode mode;
+
+  const CalendarWidget({Key? key, required this.mode}) : super(key: key);
 
   @override
   State<CalendarWidget> createState() => _CalendarWidgetState();
@@ -26,8 +30,18 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     context.read<HistoryBloc>().add(HistoryLoadEvent(dateTime: dateTime));
   }
 
+  _pageChange(DateTime dateTime) {
+    dateTime = DateTime(dateTime.year, dateTime.month);
+
+    if (dateTime.isAfter(current)) {
+      _next();
+    } else if (dateTime.isBefore(current)) {
+      _previous();
+    }
+  }
+
   _previous() {
-    if (current.isAfter(min)) {
+    if (current.isAfter(DateTime(min.year, min.month))) {
       setState(() {
         current = DateTime(current.year, current.month - 1);
       });
@@ -35,7 +49,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   }
 
   _next() {
-    if (current.isBefore(max)) {
+    if (current.isBefore(DateTime(max.year, max.month))) {
       setState(() {
         current = DateTime(current.year, current.month + 1);
       });
@@ -63,23 +77,38 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.08), borderRadius: BorderRadius.circular(30)),
+              decoration: BoxDecoration(
+                color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.05) : Colors.white.withOpacity(0.06),
+                borderRadius: BorderRadius.circular(30),
+              ),
               padding: EdgeInsets.all(5),
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: InkWell(child: Icon(Icons.chevron_left), onTap: _previous),
+              child: InkWell(
+                child: Icon(Icons.chevron_left, color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.6) : Colors.white70),
+                onTap: _previous,
+              ),
             ),
-            Text(DateFormat('MMMM yyyy').format(current)),
+            Text(
+              DateFormat('MMMM yyyy').format(current),
+              style: TextStyle(color: (widget.mode) == ColorMode.light ? Colors.black87 : Colors.white),
+            ),
             Container(
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.08), borderRadius: BorderRadius.circular(30)),
+              decoration: BoxDecoration(
+                color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.05) : Colors.white.withOpacity(0.06),
+                borderRadius: BorderRadius.circular(30),
+              ),
               padding: EdgeInsets.all(5),
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: InkWell(child: Icon(Icons.chevron_right), onTap: _next),
+              child: InkWell(
+                child: Icon(Icons.chevron_right, color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.6) : Colors.white70),
+                onTap: _next,
+              ),
             ),
           ],
         ),
-        const Divider(color: Colors.grey, thickness: 0.3, height: 0.3),
+        MyDivider(mode: widget.mode),
         Container(
-          color: Colors.white,
+          color: (widget.mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
           padding: EdgeInsets.only(top: 16, bottom: 14, left: 10, right: 10),
           child: BlocBuilder<HistoryBloc, HistoryState>(
             builder: (context, state) {
@@ -89,46 +118,55 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 lastDay: max,
                 focusedDay: current,
                 availableCalendarFormats: {CalendarFormat.month: 'month'},
-                headerStyle: HeaderStyle(
-                  titleCentered: true,
-                  headerPadding: EdgeInsets.symmetric(vertical: 4),
-                  leftChevronIcon: Container(
-                    decoration: BoxDecoration(color: Colors.black.withOpacity(0.04), borderRadius: BorderRadius.circular(30)),
-                    padding: EdgeInsets.all(6),
-                    child: Icon(Icons.chevron_left, color: Colors.black54),
-                  ),
-                  rightChevronIcon: Container(
-                    decoration: BoxDecoration(color: Colors.black.withOpacity(0.04), borderRadius: BorderRadius.circular(30)),
-                    padding: EdgeInsets.all(6),
-                    child: Icon(Icons.chevron_right, color: Colors.black54),
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        width: 0.5,
-                        color: Colors.black.withOpacity(0.2),
-                      ),
-                    ),
-                  ),
-                ),
+                availableGestures: AvailableGestures.horizontalSwipe,
                 daysOfWeekStyle: DaysOfWeekStyle(
                   dowTextFormatter: (date, locale) {
                     return DateFormat('EE').format(date)[0];
                   },
-                  weekdayStyle: TextStyle(fontWeight: FontWeight.w500),
-                  weekendStyle: TextStyle(fontWeight: FontWeight.w500),
+                  weekdayStyle: TextStyle(
+                    fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w500 : FontWeight.w500,
+                    color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                  ),
+                  weekendStyle: TextStyle(
+                    fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w500 : FontWeight.w400,
+                    color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                  ),
                 ),
                 headerVisible: false,
                 rowHeight: 50,
                 daysOfWeekHeight: 45,
                 calendarStyle: CalendarStyle(
-                  todayDecoration: BoxDecoration(color: Colors.transparent, shape: BoxShape.circle, border: Border.all(color: Colors.black87)),
-                  selectedDecoration: BoxDecoration(color: Colors.black87, shape: BoxShape.circle, border: Border.all(color: Colors.black87)),
-                  todayTextStyle: TextStyle(color: Colors.black87),
-                  withinRangeTextStyle: TextStyle(color: Colors.black87),
-                  holidayTextStyle: TextStyle(color: Colors.black87),
+                  todayDecoration: BoxDecoration(
+                    color: Colors.transparent,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white),
+                  ),
+                  selectedDecoration: BoxDecoration(
+                    color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white),
+                  ),
+                  todayTextStyle: TextStyle(
+                    color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                    fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w400 : FontWeight.w300,
+                  ),
+                  defaultTextStyle: TextStyle(
+                    color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                    fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w400 : FontWeight.w300,
+                  ),
+                  weekendTextStyle: TextStyle(
+                    color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                    fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w400 : FontWeight.w300,
+                  ),
+                  selectedTextStyle: TextStyle(
+                    color: (widget.mode == ColorMode.light) ? Colors.white : Colors.black87,
+                    fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w400 : FontWeight.w500,
+                  ),
                   outsideDaysVisible: false,
-                  markerDecoration: BoxDecoration(color: Colors.black87, shape: BoxShape.circle, border: Border.all(color: Colors.black87)),
+                  markerDecoration: BoxDecoration(
+                    color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                    shape: BoxShape.circle,
+                  ),
                   markerSizeScale: 0.15,
                   markersAnchor: 1,
                   markersMaxCount: 1,
@@ -137,9 +175,12 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 onDaySelected: (_, datetime) {
                   onSelectedChanged(DateTime(datetime.year, datetime.month, datetime.day));
                 },
+                onPageChanged: _pageChange,
                 eventLoader: (datetime) {
-                  if (state is HistoryLoadedState && state.history.containsKey(DateTime(datetime.year, datetime.month, datetime.day))) {
-                    return state.history[DateTime(datetime.year, datetime.month, datetime.day)]!.values.toList();
+                  final _datetime = DateTime(datetime.year, datetime.month, datetime.day);
+
+                  if (_datetime != current && state is HistoryLoadedState && state.history.containsKey(_datetime)) {
+                    return state.history[_datetime]!.values.toList();
                   }
                   return [];
                 },
@@ -147,7 +188,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             },
           ),
         ),
-        const Divider(color: Colors.grey, thickness: 0.3, height: 0.3),
+        MyDivider(mode: widget.mode),
       ],
     );
   }
