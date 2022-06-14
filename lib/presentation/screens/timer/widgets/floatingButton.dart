@@ -4,7 +4,7 @@ import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/presentation/screens/history/historyScreen.dart';
 import 'package:while_app/presentation/screens/settings/settingsScreen.dart';
 import 'package:while_app/presentation/screens/colors.dart';
-import 'package:while_app/presentation/screens/timer/misc/enums.dart';
+import 'package:while_app/presentation/screens/enums.dart';
 
 class FloatingButton extends StatefulWidget {
   const FloatingButton({Key? key, required this.menuValue}) : super(key: key);

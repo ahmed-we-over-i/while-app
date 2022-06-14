@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:while_app/presentation/screens/timer/misc/enums.dart';
+import 'package:while_app/presentation/screens/enums.dart';
 
 class MyDivider extends StatelessWidget {
   const MyDivider({Key? key, required this.mode}) : super(key: key);

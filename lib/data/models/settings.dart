@@ -1,15 +1,17 @@
 import 'dart:convert';
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:while_app/presentation/screens/timer/misc/enums.dart';
+import 'package:while_app/presentation/screens/enums.dart';
 
 class Settings extends HiveObject {
   bool sound;
   bool vibration;
   ColorMode mode;
   ColorTheme theme;
+  bool warmup;
+  int timer;
 
-  Settings({this.sound = true, this.vibration = true, this.mode = ColorMode.light, this.theme = ColorTheme.grey});
+  Settings({this.sound = true, this.vibration = true, this.mode = ColorMode.light, this.theme = ColorTheme.grey, this.warmup = true, this.timer = 20});
 
   Map<String, dynamic> toMap() {
     return {
@@ -17,15 +19,19 @@ class Settings extends HiveObject {
       'vibration': vibration,
       'mode': mode.name,
       'theme': theme.name,
+      'warmup': warmup,
+      'tiner': timer,
     };
   }
 
   factory Settings.fromMap(Map<String, dynamic> map) {
     return Settings(
-      sound: map['sound'] ?? false,
-      vibration: map['vibration'] ?? false,
-      mode: ColorMode.values.byName(map['mode']),
-      theme: ColorTheme.values.byName(map['theme']),
+      sound: map['sound'] ?? true,
+      vibration: map['vibration'] ?? true,
+      mode: ColorMode.values.byName(map['mode'] ?? ColorMode.light),
+      theme: ColorTheme.values.byName(map['theme'] ?? ColorTheme.grey),
+      warmup: map['sound'] ?? true,
+      timer: map['timer'] ?? 20,
     );
   }
 

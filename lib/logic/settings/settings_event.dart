@@ -36,4 +36,29 @@ class SettingsChangeColorModeEvent extends SettingsEvent {
   List<Object> get props => [value];
 }
 
-class SettingsChangeColorThemeEvent extends SettingsEvent {}
+class SettingsChangeColorThemeEvent extends SettingsEvent {
+  final ColorTheme value;
+
+  const SettingsChangeColorThemeEvent({required this.value});
+
+  @override
+  List<Object> get props => [value];
+}
+
+class SettingsChangeWarmupEvent extends SettingsEvent {
+  final bool value;
+
+  SettingsChangeWarmupEvent({required this.value});
+
+  @override
+  List<Object> get props => [value];
+}
+
+class SettingsChangeTimerEvent extends SettingsEvent {
+  final int value;
+
+  SettingsChangeTimerEvent({required this.value});
+
+  @override
+  List<Object> get props => [value];
+}

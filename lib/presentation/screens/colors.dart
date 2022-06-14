@@ -1,6 +1,7 @@
 import 'dart:ui';
 
-import 'package:while_app/presentation/screens/timer/misc/enums.dart';
+import 'package:flutter/material.dart';
+import 'package:while_app/presentation/screens/enums.dart';
 
 class CustomTheme {
   final Color backgroundColor;
@@ -14,9 +15,9 @@ CustomTheme GetColors(ColorTheme theme, ColorMode mode) {
   switch (theme) {
     case ColorTheme.grey:
       if (mode == ColorMode.light) {
-        return CustomTheme(backgroundColor: Color(0xFFE6EEF2), bottomColor: Color(0xFFACB9BF), foregroundColor: Color(0xFF3B4545));
+        return CustomTheme(backgroundColor: Color(0xFFE6EEF2), bottomColor: Color(0xFFACB9BF), foregroundColor: Color(0xFF212626));
       } else {
-        return CustomTheme(backgroundColor: Color(0xFF4C5959), bottomColor: Color(0xFF212626), foregroundColor: Color(0xFFACB9BF));
+        return CustomTheme(backgroundColor: Color(0xFF3B4545), bottomColor: Color(0xFF212626), foregroundColor: Color(0xFFACB9BF));
       }
     case ColorTheme.blue:
       if (mode == ColorMode.light) {

@@ -6,7 +6,7 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
 import 'package:while_app/presentation/screens/timer/misc/constants.dart';
-import 'package:while_app/presentation/screens/timer/misc/enums.dart';
+import 'package:while_app/presentation/screens/enums.dart';
 import 'package:while_app/presentation/screens/timer/widgets/backgroundWidget.dart';
 import 'package:while_app/presentation/screens/timer/widgets/bottomOverlay.dart';
 import 'package:while_app/presentation/screens/timer/widgets/circleList.dart';
@@ -125,8 +125,8 @@ class _TimerScreenState extends State<TimerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
+    return Material(
+      child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           BackgroundWidget(),

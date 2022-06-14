@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:while_app/logic/history/history_bloc.dart';
-import 'package:while_app/presentation/screens/timer/misc/enums.dart';
-import 'package:while_app/presentation/widgets/MyDivider.dart';
+import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/widgets/myDivider.dart';
 
 class CalendarWidget extends StatefulWidget {
   final ColorMode mode;
@@ -85,6 +85,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: InkWell(
                 child: Icon(Icons.chevron_left, color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.6) : Colors.white70),
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
                 onTap: _previous,
               ),
             ),
@@ -102,6 +104,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               child: InkWell(
                 child: Icon(Icons.chevron_right, color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.6) : Colors.white70),
                 onTap: _next,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
               ),
             ),
           ],

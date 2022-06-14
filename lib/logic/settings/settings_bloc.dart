@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:while_app/data/models/settings.dart';
 import 'package:while_app/data/repositories/settingsRepository.dart';
-import 'package:while_app/presentation/screens/timer/misc/enums.dart';
+import 'package:while_app/presentation/screens/enums.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';
@@ -18,6 +18,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<SettingsChangeVibrationEvent>(_onChangeVibration);
     on<SettingsChangeColorModeEvent>(_onChangeColorMode);
     on<SettingsChangeColorThemeEvent>(_onChangeColorTheme);
+    on<SettingsChangeWarmupEvent>(_onChangeWarmupEvent);
+    on<SettingsChangeTimerEvent>(_onChangeTimerEvent);
   }
 
   _onFetch(SettingsFetchEvent event, Emitter<SettingsState> emit) async {
@@ -27,7 +29,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   _onChangeSound(SettingsChangeSoundEvent event, Emitter<SettingsState> emit) async {
     final Settings settings = await _settingsRepository.changeSound(event.value);
-    final newState = SettingsLoadedState(settings: settings);
     emit(SettingsLoadedState(settings: settings));
   }
 
@@ -41,5 +42,18 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     emit(SettingsLoadedState(settings: settings));
   }
 
-  _onChangeColorTheme(SettingsChangeColorThemeEvent event, Emitter<SettingsState> emit) {}
+  _onChangeColorTheme(SettingsChangeColorThemeEvent event, Emitter<SettingsState> emit) async {
+    final Settings settings = await _settingsRepository.changeColorTheme(event.value);
+    emit(SettingsLoadedState(settings: settings));
+  }
+
+  _onChangeWarmupEvent(SettingsChangeWarmupEvent event, Emitter<SettingsState> emit) async {
+    final Settings settings = await _settingsRepository.changeWarmup(event.value);
+    emit(SettingsLoadedState(settings: settings));
+  }
+
+  _onChangeTimerEvent(SettingsChangeTimerEvent event, Emitter<SettingsState> emit) async {
+    final Settings settings = await _settingsRepository.changeTimer(event.value);
+    emit(SettingsLoadedState(settings: settings));
+  }
 }

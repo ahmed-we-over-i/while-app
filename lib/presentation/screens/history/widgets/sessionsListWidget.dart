@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:while_app/logic/history/history_bloc.dart';
 import 'package:collection/collection.dart';
-import 'package:while_app/presentation/screens/timer/misc/enums.dart';
-import 'package:while_app/presentation/widgets/MyDivider.dart';
+import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/widgets/myDivider.dart';
 
 class SessionsListWidget extends StatelessWidget {
   final ColorMode mode;
