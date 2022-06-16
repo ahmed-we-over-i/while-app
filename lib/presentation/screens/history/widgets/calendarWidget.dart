@@ -112,7 +112,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         ),
         MyDivider(mode: widget.mode),
         Container(
-          color: (widget.mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+          color: (widget.mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
           padding: EdgeInsets.only(top: 16, bottom: 14, left: 10, right: 10),
           child: BlocBuilder<HistoryBloc, HistoryState>(
             builder: (context, state) {

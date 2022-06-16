@@ -27,7 +27,7 @@ class SessionsListWidget extends StatelessWidget {
                 children: [
                   MyDivider(mode: mode),
                   Container(
-                    color: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                    color: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                     padding: const EdgeInsets.all(20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,7 +55,7 @@ class SessionsListWidget extends StatelessWidget {
                           return Column(
                             children: [
                               Container(
-                                color: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                                color: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                                 padding: const EdgeInsets.all(20),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

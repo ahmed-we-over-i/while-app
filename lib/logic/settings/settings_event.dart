@@ -62,3 +62,21 @@ class SettingsChangeTimerEvent extends SettingsEvent {
   @override
   List<Object> get props => [value];
 }
+
+class SettingsChangeStartChimeEvent extends SettingsEvent {
+  final String value;
+
+  SettingsChangeStartChimeEvent({required this.value});
+
+  @override
+  List<Object> get props => [value];
+}
+
+class SettingsChangeEndChimeEvent extends SettingsEvent {
+  final String value;
+
+  SettingsChangeEndChimeEvent({required this.value});
+
+  @override
+  List<Object> get props => [value];
+}

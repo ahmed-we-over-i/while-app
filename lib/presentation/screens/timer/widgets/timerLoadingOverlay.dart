@@ -19,7 +19,8 @@ class TimerLoadingOverlay extends StatefulWidget {
 class _TimerLoadingOverlayState extends State<TimerLoadingOverlay> {
   Timer? countdownTimer;
 
-  int seconds = 5;
+  late int orignal;
+  late int seconds;
 
   ValueNotifier textActive = ValueNotifier(true);
 
@@ -49,6 +50,17 @@ class _TimerLoadingOverlayState extends State<TimerLoadingOverlay> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    final state = context.read<SettingsBloc>().state;
+
+    if (state is SettingsLoadedState) {
+      orignal = state.settings.timer;
+    } else {
+      orignal = 20;
+    }
+
+    seconds = orignal;
+
     _showTime();
     countdownTimer = _startCountdownTimer();
   }
@@ -94,9 +106,7 @@ class _TimerLoadingOverlayState extends State<TimerLoadingOverlay> {
                   ),
                   SizedBox(
                     width: double.infinity,
-                    child: CustomPaint(
-                      painter: CircleBordered(-1 * (seconds * widget.height / 120), 1, customTheme.foregroundColor),
-                    ),
+                    child: CustomPaint(painter: CircleBordered(-1 * ((widget.height / 6) * (seconds / orignal)), 1, customTheme.foregroundColor)),
                   ),
                 ],
               );

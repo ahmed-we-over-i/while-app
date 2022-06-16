@@ -29,7 +29,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
             style: TextStyle(color: (mode == ColorMode.light) ? Colors.black87 : Colors.white, fontWeight: (mode == ColorMode.light) ? FontWeight.w500 : FontWeight.w400),
           ),
           padding: const EdgeInsetsDirectional.only(top: 5, start: 10, end: 10),
-          backgroundColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+          backgroundColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
           border: Border(bottom: BorderSide(width: 0.4, color: (mode == ColorMode.light) ? Colors.grey : Colors.white30)),
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/presentation/screens/settings/displayScreen.dart';
 import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/screens/settings/feedbackScreen.dart';
 import 'package:while_app/presentation/screens/settings/timerControlsScreen.dart';
 import 'package:while_app/presentation/widgets/myDivider.dart';
 
@@ -18,8 +19,8 @@ class SettingsScreenOptions extends StatelessWidget {
         int myValue = orignalValue;
 
         return Container(
-          height: MediaQuery.of(context).size.height * 0.3,
-          color: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+          height: MediaQuery.of(context).size.height * 0.4,
+          color: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -48,10 +49,10 @@ class SettingsScreenOptions extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 120,
+                height: 200,
                 child: CupertinoPicker(
                   scrollController: FixedExtentScrollController(initialItem: orignalValue),
-                  itemExtent: 45,
+                  itemExtent: 40,
                   onSelectedItemChanged: (value) {
                     myValue = value;
                   },
@@ -87,13 +88,13 @@ class SettingsScreenOptions extends StatelessWidget {
               MyDivider(mode: mode),
               ListTile(
                 leading: Text("Sound", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
-                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                 trailing: CupertinoSwitch(
                   value: state.settings.sound,
                   onChanged: (value) {
                     context.read<SettingsBloc>().add(SettingsChangeSoundEvent(value: value));
                   },
-                  activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.black26,
+                  activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.grey,
                   trackColor: (mode == ColorMode.light) ? Colors.black12 : Colors.white10,
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
@@ -101,13 +102,13 @@ class SettingsScreenOptions extends StatelessWidget {
               MyDivider(mode: mode),
               ListTile(
                 leading: Text("Vibration", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
-                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                 trailing: CupertinoSwitch(
                   value: state.settings.vibration,
                   onChanged: (value) {
                     context.read<SettingsBloc>().add(SettingsChangeVibrationEvent(value: value));
                   },
-                  activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.black26,
+                  activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.grey,
                   trackColor: (mode == ColorMode.light) ? Colors.black12 : Colors.white10,
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
@@ -115,7 +116,7 @@ class SettingsScreenOptions extends StatelessWidget {
               MyDivider(mode: mode),
               ListTile(
                 leading: Text("Light or Dark", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
-                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                 trailing: Text(
                   (state.settings.mode == ColorMode.light) ? "Always light" : "Always dark",
                   style: const TextStyle(fontSize: 16, color: Colors.blue),
@@ -130,9 +131,9 @@ class SettingsScreenOptions extends StatelessWidget {
                 title: Text("Color and Graphics", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                 subtitle: Padding(
                   padding: EdgeInsets.only(top: 8.0),
-                  child: Text("Choose color themes & graphical shapes", style: TextStyle(fontSize: 13, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
+                  child: Text("Choose color themes & graphical shapes", style: TextStyle(fontSize: 13, color: (mode == ColorMode.light) ? Colors.black54 : Colors.white70)),
                 ),
-                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                 contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
                 trailing: Icon(Icons.chevron_right, size: 30, color: (mode == ColorMode.light) ? Colors.grey : Colors.white70),
                 onTap: () {
@@ -144,9 +145,9 @@ class SettingsScreenOptions extends StatelessWidget {
                 title: Text("Intervals and Chimes", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                 subtitle: Padding(
                   padding: EdgeInsets.only(top: 8.0),
-                  child: Text("Configure timer durations and controls", style: TextStyle(fontSize: 13, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
+                  child: Text("Configure timer durations and controls", style: TextStyle(fontSize: 13, color: (mode == ColorMode.light) ? Colors.black54 : Colors.white70)),
                 ),
-                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                 contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
                 trailing: Icon(Icons.chevron_right, size: 30, color: (mode == ColorMode.light) ? Colors.grey : Colors.white70),
                 onTap: () {
@@ -158,13 +159,16 @@ class SettingsScreenOptions extends StatelessWidget {
               MyDivider(mode: mode),
               ListTile(
                 leading: Text("Feedback", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
-                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                 contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute<void>(builder: (BuildContext context) => FeedbackScreen()));
+                },
               ),
               MyDivider(mode: mode),
               ListTile(
                 leading: Text("Privacy", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
-                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                 contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
               ),
               MyDivider(mode: mode),

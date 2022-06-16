@@ -15,5 +15,5 @@ class SettingsLoadedState extends SettingsState {
   const SettingsLoadedState({required this.settings});
 
   @override
-  List<Object> get props => [settings.sound, settings.vibration, settings.mode, settings.theme, settings.warmup, settings.timer];
+  List<Object> get props => [settings.sound, settings.vibration, settings.mode, settings.theme, settings.warmup, settings.timer, settings.startChime, settings.endChime];
 }

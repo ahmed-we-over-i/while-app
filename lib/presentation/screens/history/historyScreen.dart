@@ -17,7 +17,7 @@ class HistoryScreen extends StatelessWidget {
           final mode = state.settings.mode;
 
           return Scaffold(
-            backgroundColor: (mode == ColorMode.light) ? Color(0xFFFAFAFA) : Color(0xFF2A2A2A),
+            backgroundColor: (mode == ColorMode.light) ? Color(0xFFF4F4F4) : Color(0xFF1C1C1C),
             appBar: CustomAppBar(mode: mode, text: 'History'),
             body: SafeArea(
               child: SingleChildScrollView(

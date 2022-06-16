@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/screens/sounds.dart';
 import 'package:while_app/presentation/widgets/customAppBar.dart';
 import 'package:while_app/presentation/widgets/myDivider.dart';
 
@@ -14,11 +15,11 @@ class TimerControlsScreen extends StatelessWidget {
       context: context,
       barrierColor: (mode == ColorMode.light) ? Colors.black26 : Colors.black38,
       builder: (BuildContext context) {
-        int myValue = orignalValue;
+        int myValue = orignalValue - 1;
 
         return Container(
           height: MediaQuery.of(context).size.height * 0.4,
-          color: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+          color: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -37,7 +38,7 @@ class TimerControlsScreen extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        context.read<SettingsBloc>().add(SettingsChangeTimerEvent(value: myValue));
+                        context.read<SettingsBloc>().add(SettingsChangeTimerEvent(value: myValue + 1));
                         Navigator.of(context).pop();
                       },
                       child: Text('Done', style: TextStyle(color: (mode == ColorMode.light) ? Colors.black.withOpacity(0.7) : Colors.white70)),
@@ -49,7 +50,7 @@ class TimerControlsScreen extends StatelessWidget {
               SizedBox(
                 height: 200,
                 child: CupertinoPicker(
-                  scrollController: FixedExtentScrollController(initialItem: orignalValue),
+                  scrollController: FixedExtentScrollController(initialItem: orignalValue - 1),
                   itemExtent: 40,
                   onSelectedItemChanged: (value) {
                     myValue = value;
@@ -70,6 +71,71 @@ class TimerControlsScreen extends StatelessWidget {
     );
   }
 
+  _buildSoundPicker(BuildContext context, String orignalValue, ColorMode mode, bool startChime) {
+    showCupertinoModalPopup(
+      context: context,
+      barrierColor: (mode == ColorMode.light) ? Colors.black26 : Colors.black38,
+      builder: (BuildContext context) {
+        int orignal = sounds.indexWhere((element) => element == orignalValue);
+        int myValue = orignal;
+
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.38,
+          color: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(color: (mode == ColorMode.light) ? Colors.black.withOpacity(0.6) : Colors.white60),
+                      ),
+                      style: TextButton.styleFrom(primary: Colors.grey),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        if (startChime) {
+                          context.read<SettingsBloc>().add(SettingsChangeStartChimeEvent(value: sounds[myValue]));
+                        } else {
+                          context.read<SettingsBloc>().add(SettingsChangeEndChimeEvent(value: sounds[myValue]));
+                        }
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Done', style: TextStyle(color: (mode == ColorMode.light) ? Colors.black.withOpacity(0.7) : Colors.white70)),
+                      style: TextButton.styleFrom(primary: Colors.grey),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 180,
+                child: CupertinoPicker(
+                  scrollController: FixedExtentScrollController(initialItem: orignal),
+                  itemExtent: 45,
+                  onSelectedItemChanged: (value) {
+                    myValue = value;
+                  },
+                  children: sounds.map((e) {
+                    return Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(e, style: TextStyle(fontSize: 20, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, SettingsState>(
@@ -78,7 +144,7 @@ class TimerControlsScreen extends StatelessWidget {
           final mode = state.settings.mode;
 
           return Scaffold(
-            backgroundColor: (mode == ColorMode.light) ? Color(0xFFFAFAFA) : Color(0xFF2C2C2C),
+            backgroundColor: (mode == ColorMode.light) ? Color(0xFFF4F4F4) : Color(0xFF1C1C1C),
             appBar: CustomAppBar(mode: mode, text: 'Timer Controls'),
             body: SafeArea(
               child: SingleChildScrollView(
@@ -90,16 +156,16 @@ class TimerControlsScreen extends StatelessWidget {
                       title: Text("Warmup", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                       subtitle: Padding(
                         padding: EdgeInsets.only(top: 8.0),
-                        child: Text("Time before your actual session starts", style: TextStyle(fontSize: 13, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
+                        child: Text("Time before your actual session starts", style: TextStyle(fontSize: 13, color: (mode == ColorMode.light) ? Colors.black54 : Colors.white70)),
                       ),
-                      tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                      tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                       contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
                       trailing: CupertinoSwitch(
                         value: state.settings.warmup,
                         onChanged: (value) {
                           context.read<SettingsBloc>().add(SettingsChangeWarmupEvent(value: value));
                         },
-                        activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.black26,
+                        activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.grey,
                         trackColor: (mode == ColorMode.light) ? Colors.black12 : Colors.white10,
                       ),
                     ),
@@ -109,7 +175,7 @@ class TimerControlsScreen extends StatelessWidget {
                         children: [
                           ListTile(
                             leading: Text("Time", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
-                            tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                            tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                             trailing: Text(
                               state.settings.timer.toString() + ' secs',
                               style: const TextStyle(fontSize: 16, color: Colors.blue),
@@ -122,12 +188,15 @@ class TimerControlsScreen extends StatelessWidget {
                       ),
                     ListTile(
                       leading: Text("Chime", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
-                      tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                      tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                       trailing: Text(
-                        'Chime',
+                        state.settings.startChime,
                         style: const TextStyle(fontSize: 16, color: Colors.blue),
                       ),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
+                      onTap: () {
+                        _buildSoundPicker(context, state.settings.startChime, mode, true);
+                      },
                     ),
                     MyDivider(mode: mode),
                     const SizedBox(height: 35),
@@ -137,12 +206,15 @@ class TimerControlsScreen extends StatelessWidget {
                           MyDivider(mode: mode),
                           ListTile(
                             leading: Text("End of session chime", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
-                            tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+                            tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                             trailing: Text(
-                              'Chime',
+                              state.settings.endChime,
                               style: const TextStyle(fontSize: 16, color: Colors.blue),
                             ),
                             contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
+                            onTap: () {
+                              _buildSoundPicker(context, state.settings.endChime, mode, false);
+                            },
                           ),
                           MyDivider(mode: mode),
                         ],

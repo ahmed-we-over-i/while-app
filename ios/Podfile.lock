@@ -4,17 +4,26 @@ PODS:
   - Flutter (1.0.0)
   - flutter_vibrate (0.0.1):
     - Flutter
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
   - just_audio (0.0.1):
     - Flutter
   - path_provider_ios (0.0.1):
     - Flutter
+  - Toast (4.0.0)
 
 DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - Flutter (from `Flutter`)
   - flutter_vibrate (from `.symlinks/plugins/flutter_vibrate/ios`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Toast
 
 EXTERNAL SOURCES:
   audio_session:
@@ -23,6 +32,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_vibrate:
     :path: ".symlinks/plugins/flutter_vibrate/ios"
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
   just_audio:
     :path: ".symlinks/plugins/just_audio/ios"
   path_provider_ios:
@@ -32,8 +43,10 @@ SPEC CHECKSUMS:
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_vibrate: 9f4c2ab57008965f78969472367c329dd77eb801
+  fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 

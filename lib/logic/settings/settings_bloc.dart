@@ -20,6 +20,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<SettingsChangeColorThemeEvent>(_onChangeColorTheme);
     on<SettingsChangeWarmupEvent>(_onChangeWarmupEvent);
     on<SettingsChangeTimerEvent>(_onChangeTimerEvent);
+    on<SettingsChangeStartChimeEvent>(_onChangeStartChimeEvent);
+    on<SettingsChangeEndChimeEvent>(_onChangeEndChimeEvent);
   }
 
   _onFetch(SettingsFetchEvent event, Emitter<SettingsState> emit) async {
@@ -54,6 +56,16 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   _onChangeTimerEvent(SettingsChangeTimerEvent event, Emitter<SettingsState> emit) async {
     final Settings settings = await _settingsRepository.changeTimer(event.value);
+    emit(SettingsLoadedState(settings: settings));
+  }
+
+  _onChangeStartChimeEvent(SettingsChangeStartChimeEvent event, Emitter<SettingsState> emit) async {
+    final Settings settings = await _settingsRepository.changeStartChime(event.value);
+    emit(SettingsLoadedState(settings: settings));
+  }
+
+  _onChangeEndChimeEvent(SettingsChangeEndChimeEvent event, Emitter<SettingsState> emit) async {
+    final Settings settings = await _settingsRepository.changeEndChime(event.value);
     emit(SettingsLoadedState(settings: settings));
   }
 }

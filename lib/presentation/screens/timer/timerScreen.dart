@@ -2,11 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
 import 'package:while_app/presentation/screens/timer/misc/constants.dart';
 import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/screens/timer/misc/functions.dart';
 import 'package:while_app/presentation/screens/timer/widgets/backgroundWidget.dart';
 import 'package:while_app/presentation/screens/timer/widgets/bottomOverlay.dart';
 import 'package:while_app/presentation/screens/timer/widgets/circleList.dart';
@@ -60,7 +60,13 @@ class _TimerScreenState extends State<TimerScreen> {
 
           if (state is TimerPickedState) {
             Timer(const Duration(milliseconds: 600), () {
-              context.read<TimerBloc>().add(TimerLoadingEvent(circlesAboveLine));
+              final state = context.read<SettingsBloc>().state;
+
+              if (!(state is SettingsLoadedState) || state.settings.warmup) {
+                context.read<TimerBloc>().add(TimerLoadingEvent(circlesAboveLine));
+              } else {
+                context.read<TimerBloc>().add(TimerLoadedEvent(circlesAboveLine));
+              }
             });
           }
           if (state is TimerLoadedChangeState) {
@@ -125,8 +131,8 @@ class _TimerScreenState extends State<TimerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Stack(
+    return Scaffold(
+      body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           BackgroundWidget(),
@@ -150,13 +156,9 @@ class _TimerScreenState extends State<TimerScreen> {
               }
               if (state is TimerLoadedState || state is TimerFinishedState) {
                 if (!(state is TimerFinishedState && !state.soundVibration)) {
-                  final player = AudioPlayer();
+                  final settingsState = context.read<SettingsBloc>().state;
 
-                  await player.setAsset("assets/sounds/sound2.wav");
-
-                  player.play();
-
-                  await Vibrate.vibrate();
+                  if (settingsState is SettingsLoadedState) playSoundAndVibration(state, settingsState);
                 }
               }
             },

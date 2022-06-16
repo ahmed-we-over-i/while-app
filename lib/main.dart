@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           scrollBehavior: MyCustomScrollBehavior(),
           home: Theme(
             child: const TimerScreen(),
-            data: ThemeData(fontFamily: 'Apercu'),
+            data: ThemeData(fontFamily: 'Apercu', primaryColor: Colors.transparent),
           ),
         ),
       ),

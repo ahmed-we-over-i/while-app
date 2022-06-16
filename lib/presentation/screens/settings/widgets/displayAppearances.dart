@@ -53,7 +53,7 @@ class DisplayAppearances extends StatelessWidget {
           MyDivider(mode: mode),
           ListTile(
             title: Text("Color", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
-            tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+            tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
             contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,

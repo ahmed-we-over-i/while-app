@@ -38,7 +38,16 @@ class SettingsRepository {
       await fetch();
     }
 
-    settings = Settings(sound: value, vibration: settings.vibration, mode: settings.mode, theme: settings.theme, warmup: settings.warmup, timer: settings.timer);
+    settings = Settings(
+      sound: value,
+      vibration: settings.vibration,
+      mode: settings.mode,
+      theme: settings.theme,
+      warmup: settings.warmup,
+      timer: settings.timer,
+      startChime: settings.startChime,
+      endChime: settings.endChime,
+    );
 
     await _save.call();
 
@@ -50,7 +59,16 @@ class SettingsRepository {
       await fetch();
     }
 
-    settings = Settings(sound: settings.sound, vibration: value, mode: settings.mode, theme: settings.theme, warmup: settings.warmup, timer: settings.timer);
+    settings = Settings(
+      sound: settings.sound,
+      vibration: value,
+      mode: settings.mode,
+      theme: settings.theme,
+      warmup: settings.warmup,
+      timer: settings.timer,
+      startChime: settings.startChime,
+      endChime: settings.endChime,
+    );
 
     await _save.call();
 
@@ -62,7 +80,16 @@ class SettingsRepository {
       await fetch();
     }
 
-    settings = Settings(sound: settings.sound, vibration: settings.vibration, mode: value, theme: settings.theme, warmup: settings.warmup, timer: settings.timer);
+    settings = Settings(
+      sound: settings.sound,
+      vibration: settings.vibration,
+      mode: value,
+      theme: settings.theme,
+      warmup: settings.warmup,
+      timer: settings.timer,
+      startChime: settings.startChime,
+      endChime: settings.endChime,
+    );
 
     await _save.call();
 
@@ -74,7 +101,16 @@ class SettingsRepository {
       await fetch();
     }
 
-    settings = Settings(sound: settings.sound, vibration: settings.vibration, mode: settings.mode, theme: value, warmup: settings.warmup, timer: settings.timer);
+    settings = Settings(
+      sound: settings.sound,
+      vibration: settings.vibration,
+      mode: settings.mode,
+      theme: value,
+      warmup: settings.warmup,
+      timer: settings.timer,
+      startChime: settings.startChime,
+      endChime: settings.endChime,
+    );
 
     await _save.call();
 
@@ -86,7 +122,16 @@ class SettingsRepository {
       await fetch();
     }
 
-    settings = Settings(sound: settings.sound, vibration: settings.vibration, mode: settings.mode, theme: settings.theme, warmup: value, timer: settings.timer);
+    settings = Settings(
+      sound: settings.sound,
+      vibration: settings.vibration,
+      mode: settings.mode,
+      theme: settings.theme,
+      warmup: value,
+      timer: settings.timer,
+      startChime: settings.startChime,
+      endChime: settings.endChime,
+    );
 
     await _save.call();
 
@@ -98,7 +143,58 @@ class SettingsRepository {
       await fetch();
     }
 
-    settings = Settings(sound: settings.sound, vibration: settings.vibration, mode: settings.mode, theme: settings.theme, warmup: settings.warmup, timer: value);
+    settings = Settings(
+      sound: settings.sound,
+      vibration: settings.vibration,
+      mode: settings.mode,
+      theme: settings.theme,
+      warmup: settings.warmup,
+      timer: value,
+      startChime: settings.startChime,
+      endChime: settings.endChime,
+    );
+
+    await _save.call();
+
+    return settings;
+  }
+
+  Future<Settings> changeStartChime(String value) async {
+    if (!fetched) {
+      await fetch();
+    }
+
+    settings = Settings(
+      sound: settings.sound,
+      vibration: settings.vibration,
+      mode: settings.mode,
+      theme: settings.theme,
+      warmup: settings.warmup,
+      timer: settings.timer,
+      startChime: value,
+      endChime: settings.endChime,
+    );
+
+    await _save.call();
+
+    return settings;
+  }
+
+  Future<Settings> changeEndChime(String value) async {
+    if (!fetched) {
+      await fetch();
+    }
+
+    settings = Settings(
+      sound: settings.sound,
+      vibration: settings.vibration,
+      mode: settings.mode,
+      theme: settings.theme,
+      warmup: settings.warmup,
+      timer: settings.timer,
+      startChime: settings.startChime,
+      endChime: value,
+    );
 
     await _save.call();
 

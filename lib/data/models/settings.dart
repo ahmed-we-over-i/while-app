@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/screens/sounds.dart';
 
 class Settings extends HiveObject {
   bool sound;
@@ -10,8 +11,22 @@ class Settings extends HiveObject {
   ColorTheme theme;
   bool warmup;
   int timer;
+  late String startChime;
+  late String endChime;
 
-  Settings({this.sound = true, this.vibration = true, this.mode = ColorMode.light, this.theme = ColorTheme.grey, this.warmup = true, this.timer = 20});
+  Settings({
+    String? startChime,
+    String? endChime,
+    this.sound = true,
+    this.vibration = true,
+    this.mode = ColorMode.light,
+    this.theme = ColorTheme.grey,
+    this.warmup = true,
+    this.timer = 20,
+  }) {
+    this.startChime = (startChime != null) ? startChime : sounds.first;
+    this.endChime = (endChime != null) ? endChime : sounds.first;
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -20,7 +35,9 @@ class Settings extends HiveObject {
       'mode': mode.name,
       'theme': theme.name,
       'warmup': warmup,
-      'tiner': timer,
+      'timer': timer,
+      'startChime': startChime,
+      'endChime': endChime,
     };
   }
 
@@ -32,6 +49,8 @@ class Settings extends HiveObject {
       theme: ColorTheme.values.byName(map['theme'] ?? ColorTheme.grey),
       warmup: map['sound'] ?? true,
       timer: map['timer'] ?? 20,
+      startChime: map['startChime'] ?? sounds.first,
+      endChime: map['endChime'] ?? sounds.first,
     );
   }
 

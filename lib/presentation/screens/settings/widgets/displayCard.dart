@@ -46,7 +46,7 @@ class DisplayCard extends StatelessWidget {
           ),
         ),
         SizedBox(height: 12),
-        Text(text, style: TextStyle(height: 1.5, fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
+        Text(text, style: TextStyle(height: 1.5, fontSize: 15, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
       ],
     );
   }

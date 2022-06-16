@@ -27,7 +27,7 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: (widget.mode == ColorMode.light) ? Colors.white : Color(0xFF3A3A3A),
+      color: (widget.mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
