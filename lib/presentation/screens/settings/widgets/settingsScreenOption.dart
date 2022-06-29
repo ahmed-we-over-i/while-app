@@ -19,7 +19,7 @@ class SettingsScreenOptions extends StatelessWidget {
         int myValue = orignalValue;
 
         return Container(
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: MediaQuery.of(context).size.height * 0.35,
           color: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -49,10 +49,10 @@ class SettingsScreenOptions extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 200,
+                height: 150,
                 child: CupertinoPicker(
                   scrollController: FixedExtentScrollController(initialItem: orignalValue),
-                  itemExtent: 40,
+                  itemExtent: 45,
                   onSelectedItemChanged: (value) {
                     myValue = value;
                   },
@@ -94,8 +94,9 @@ class SettingsScreenOptions extends StatelessWidget {
                   onChanged: (value) {
                     context.read<SettingsBloc>().add(SettingsChangeSoundEvent(value: value));
                   },
-                  activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.grey,
-                  trackColor: (mode == ColorMode.light) ? Colors.black12 : Colors.white10,
+                  activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.white,
+                  trackColor: (mode == ColorMode.light) ? Colors.black12 : Colors.white54,
+                  thumbColor: (mode == ColorMode.light) ? Colors.white : Colors.black87,
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
               ),
@@ -108,8 +109,9 @@ class SettingsScreenOptions extends StatelessWidget {
                   onChanged: (value) {
                     context.read<SettingsBloc>().add(SettingsChangeVibrationEvent(value: value));
                   },
-                  activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.grey,
-                  trackColor: (mode == ColorMode.light) ? Colors.black12 : Colors.white10,
+                  activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.white,
+                  trackColor: (mode == ColorMode.light) ? Colors.black12 : Colors.white54,
+                  thumbColor: (mode == ColorMode.light) ? Colors.white : Colors.black87,
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
               ),

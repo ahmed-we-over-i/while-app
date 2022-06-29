@@ -65,7 +65,7 @@ class SessionsListWidget extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              const Divider(color: Colors.grey, thickness: 0.3, height: 0.3),
+                              MyDivider(mode: mode),
                             ],
                           );
                         }).toList(),

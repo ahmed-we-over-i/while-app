@@ -165,8 +165,9 @@ class TimerControlsScreen extends StatelessWidget {
                         onChanged: (value) {
                           context.read<SettingsBloc>().add(SettingsChangeWarmupEvent(value: value));
                         },
-                        activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.grey,
-                        trackColor: (mode == ColorMode.light) ? Colors.black12 : Colors.white10,
+                        activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.white,
+                        trackColor: (mode == ColorMode.light) ? Colors.black12 : Colors.white54,
+                        thumbColor: (mode == ColorMode.light) ? Colors.white : Colors.black87,
                       ),
                     ),
                     MyDivider(mode: mode),
@@ -184,41 +185,36 @@ class TimerControlsScreen extends StatelessWidget {
                             onTap: () => _buildTimePicker(context, state.settings.timer, mode),
                           ),
                           MyDivider(mode: mode),
-                        ],
-                      ),
-                    ListTile(
-                      leading: Text("Chime", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
-                      tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
-                      trailing: Text(
-                        state.settings.startChime,
-                        style: const TextStyle(fontSize: 16, color: Colors.blue),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
-                      onTap: () {
-                        _buildSoundPicker(context, state.settings.startChime, mode, true);
-                      },
-                    ),
-                    MyDivider(mode: mode),
-                    const SizedBox(height: 35),
-                    if (state.settings.warmup)
-                      Column(
-                        children: [
-                          MyDivider(mode: mode),
                           ListTile(
-                            leading: Text("End of session chime", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
+                            leading: Text("Chime", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                             tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                             trailing: Text(
-                              state.settings.endChime,
+                              state.settings.startChime,
                               style: const TextStyle(fontSize: 16, color: Colors.blue),
                             ),
                             contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
                             onTap: () {
-                              _buildSoundPicker(context, state.settings.endChime, mode, false);
+                              _buildSoundPicker(context, state.settings.startChime, mode, true);
                             },
                           ),
                           MyDivider(mode: mode),
                         ],
                       ),
+                    const SizedBox(height: 35),
+                    MyDivider(mode: mode),
+                    ListTile(
+                      leading: Text("End of session chime", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
+                      tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
+                      trailing: Text(
+                        state.settings.endChime,
+                        style: const TextStyle(fontSize: 16, color: Colors.blue),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
+                      onTap: () {
+                        _buildSoundPicker(context, state.settings.endChime, mode, false);
+                      },
+                    ),
+                    MyDivider(mode: mode),
                     const SizedBox(height: 35),
                   ],
                 ),

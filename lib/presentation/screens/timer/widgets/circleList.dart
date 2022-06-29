@@ -15,7 +15,7 @@ class CircleList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(height: (height / 2) + spaceBetweenDots + circleRadius),
+        SizedBox(height: (height / 2) + spaceBetweenDots + circleRadius),
         for (int i = 1; i <= maxTime; i++)
           Container(
             margin: const EdgeInsets.only(bottom: spaceBetweenDots),
@@ -34,7 +34,7 @@ class CircleList extends StatelessWidget {
               },
             ),
           ),
-        SizedBox(height: height / 2),
+        SizedBox(height: (height / 2) + spaceBetweenDots + circleRadius),
       ],
     );
   }

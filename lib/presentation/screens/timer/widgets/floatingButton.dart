@@ -40,8 +40,8 @@ class _FloatingButtonState extends State<FloatingButton> with SingleTickerProvid
             valueListenable: widget.menuValue,
             builder: (context, value, __) {
               return Positioned(
-                right: 40,
-                bottom: 40,
+                right: 30,
+                bottom: 30,
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 300),
                   opacity: (value != MenuValue.hidden) ? 1 : 0,
@@ -50,68 +50,62 @@ class _FloatingButtonState extends State<FloatingButton> with SingleTickerProvid
                     children: [
                       AnimatedBuilder(
                         animation: _animation,
-                        builder: (context, _) => Container(
-                          decoration: BoxDecoration(
-                            color: myColor.withOpacity(_animation.value * bgOpacity),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          margin: EdgeInsets.only(bottom: _animation.value * 120),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingScreen()));
-                            },
-                            padding: const EdgeInsets.all(6),
-                            constraints: const BoxConstraints(),
-                            icon: Icon(
-                              Icons.settings,
-                              size: 20,
-                              color: myColor.withOpacity(_animation.value * iconOpactiy),
+                        builder: (context, _) => GestureDetector(
+                          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingScreen())),
+                          behavior: HitTestBehavior.translucent,
+                          child: Padding(
+                            padding: const EdgeInsets.all(7),
+                            child: Container(
+                              decoration: BoxDecoration(color: myColor.withOpacity(_animation.value * bgOpacity), borderRadius: BorderRadius.circular(30)),
+                              width: 38,
+                              height: 38,
+                              margin: EdgeInsets.only(bottom: _animation.value * (90 + 24)),
+                              child: Icon(Icons.settings, size: 20, color: myColor.withOpacity(_animation.value * iconOpactiy)),
                             ),
                           ),
                         ),
                       ),
                       AnimatedBuilder(
                         animation: _animation,
-                        builder: (context, _) => Container(
-                          decoration: BoxDecoration(
-                            color: myColor.withOpacity(_animation.value * bgOpacity),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          margin: EdgeInsets.only(bottom: _animation.value * 60),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HistoryScreen()));
-                            },
-                            padding: const EdgeInsets.all(6),
-                            constraints: const BoxConstraints(),
-                            icon: Icon(
-                              Icons.calendar_today,
-                              size: 16,
-                              color: myColor.withOpacity(_animation.value * iconOpactiy),
+                        builder: (context, _) => GestureDetector(
+                          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HistoryScreen())),
+                          behavior: HitTestBehavior.translucent,
+                          child: Padding(
+                            padding: const EdgeInsets.all(7),
+                            child: Container(
+                              decoration: BoxDecoration(color: myColor.withOpacity(_animation.value * bgOpacity), borderRadius: BorderRadius.circular(30)),
+                              margin: EdgeInsets.only(bottom: _animation.value * (45 + 12)),
+                              width: 38,
+                              height: 38,
+                              child: Icon(Icons.calendar_today, size: 16, color: myColor.withOpacity(_animation.value * iconOpactiy)),
                             ),
                           ),
                         ),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: myColor.withOpacity(bgOpacity),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: IconButton(
-                          onPressed: () {
-                            if (widget.menuValue.value == MenuValue.open) {
-                              widget.menuValue.value = MenuValue.closed;
-                              _menuController.reverse();
-                            } else {
-                              widget.menuValue.value = MenuValue.open;
-                              _menuController.forward();
-                            }
-                          },
-                          padding: const EdgeInsets.all(6),
-                          constraints: const BoxConstraints(),
-                          icon: RotationTransition(
-                            turns: Tween(begin: 0.0, end: 0.5).animate(_menuController),
-                            child: Icon(Icons.expand_less_rounded, size: 25, color: myColor.withOpacity(iconOpactiy)),
+                      GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () {
+                          if (widget.menuValue.value == MenuValue.open) {
+                            widget.menuValue.value = MenuValue.closed;
+                            _menuController.reverse();
+                          } else {
+                            widget.menuValue.value = MenuValue.open;
+                            _menuController.forward();
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(7),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: myColor.withOpacity(bgOpacity),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            width: 38,
+                            height: 38,
+                            child: RotationTransition(
+                              turns: Tween(begin: 0.0, end: 0.5).animate(_menuController),
+                              child: Icon(Icons.expand_less_rounded, size: 25, color: myColor.withOpacity(iconOpactiy)),
+                            ),
                           ),
                         ),
                       ),

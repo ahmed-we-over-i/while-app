@@ -122,8 +122,9 @@ class FeedbackScreen extends StatelessWidget {
                                   onChanged: (value) {
                                     switchValue.value = value;
                                   },
-                                  activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.grey,
-                                  trackColor: (mode == ColorMode.light) ? Colors.black12 : Colors.white10,
+                                  activeColor: (mode == ColorMode.light) ? Colors.grey : Colors.white,
+                                  trackColor: (mode == ColorMode.light) ? Colors.black12 : Colors.white54,
+                                  thumbColor: (mode == ColorMode.light) ? Colors.white : Colors.black87,
                                 );
                               },
                             ),

@@ -1,19 +1,21 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:while_app/data/models/settings.dart';
 import 'package:while_app/logic/session/session_bloc.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
 import 'package:while_app/presentation/screens/timer/designs/circle.dart';
 import 'package:while_app/presentation/screens/colors.dart';
 import 'package:while_app/presentation/screens/timer/misc/variables.dart';
+import 'package:workmanager/workmanager.dart';
 
 class TimerLoadedOverlay extends StatefulWidget {
   const TimerLoadedOverlay({Key? key, required this.height, required this.scrollController, required this.blockChange}) : super(key: key);
 
   final double height;
   final ScrollController scrollController;
-  final VoidCallback blockChange;
+  final Function blockChange;
 
   @override
   State<TimerLoadedOverlay> createState() => _TimerLoadedOverlayState();
@@ -40,13 +42,13 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
 
   _animateOffsetToNewPosition() {
     double newOffset = calculateActualOffset(countdownValue);
-    widget.blockChange.call();
+    widget.blockChange.call(true);
     widget.scrollController.animateTo(newOffset, duration: const Duration(milliseconds: 200), curve: Curves.linear);
     _animationController.forward();
   }
 
-  _checkCountdownAction({bool wasPaused = false}) {
-    _animateOffsetToNewPosition();
+  _checkCountdownAction({bool wasPaused = false, bool hasChanged = false}) {
+    if (!wasPaused || hasChanged) _animateOffsetToNewPosition();
 
     if (countdownValue < 0) {
       countdownTimer?.cancel();
@@ -74,6 +76,7 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
           secondsRemaining--;
         });
       } else {
+        print("here");
         context.read<SessionBloc>().add(SessionIncrementEvent());
         _restartTimer();
       }
@@ -106,9 +109,21 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
     if (state == AppLifecycleState.paused) {
       countdownTimer?.cancel();
 
-      final Duration _duration = finishingTime.difference(DateTime.now());
+      // final Duration _duration = finishingTime.difference(DateTime.now());
+
+      // final state = context.read<SettingsBloc>().state;
+
+      // if (state is SettingsLoadedState) {
+      //   Workmanager().registerOneOffTask("taskCall", "task", initialDelay: Duration(seconds: 1), inputData: {
+      //     'sound': state.settings.sound,
+      //     'vibration': state.settings.vibration,
+      //     'chime': state.settings.endChime,
+      //   });
+      // }
     }
     if (state == AppLifecycleState.resumed) {
+      // Workmanager().cancelAll();
+
       int timeDifference = finishingTime.difference(DateTime.now()).inSeconds;
 
       secondsRemaining = timeDifference % 60;
@@ -117,9 +132,16 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
 
       context.read<SessionBloc>().add(SessionIncrementEvent(num: countdownValue - newCountdownValue));
 
-      countdownValue = newCountdownValue;
+      bool hasChanged = (countdownValue != newCountdownValue);
 
-      _checkCountdownAction(wasPaused: true);
+      if (hasChanged) {
+        countdownValue = newCountdownValue;
+
+        _checkCountdownAction(wasPaused: true, hasChanged: true);
+      } else {
+        _checkCountdownAction(wasPaused: true);
+      }
+
       countdownTimer?.cancel();
       countdownTimer = _startCountdownTimer();
     }

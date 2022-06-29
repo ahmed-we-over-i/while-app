@@ -76,36 +76,40 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.05) : Colors.white.withOpacity(0.06),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              padding: EdgeInsets.all(5),
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: InkWell(
-                child: Icon(Icons.chevron_left, color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.6) : Colors.white70),
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: _previous,
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: _previous,
+              child: Padding(
+                padding: const EdgeInsets.all(4),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.05) : Colors.white.withOpacity(0.06),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  child: Icon(Icons.chevron_left, color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.6) : Colors.white70),
+                ),
               ),
             ),
             Text(
               DateFormat('MMMM yyyy').format(current),
               style: TextStyle(color: (widget.mode) == ColorMode.light ? Colors.black87 : Colors.white),
             ),
-            Container(
-              decoration: BoxDecoration(
-                color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.05) : Colors.white.withOpacity(0.06),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              padding: EdgeInsets.all(5),
-              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: InkWell(
-                child: Icon(Icons.chevron_right, color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.6) : Colors.white70),
-                onTap: _next,
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
+            GestureDetector(
+              onTap: _next,
+              behavior: HitTestBehavior.translucent,
+              child: Padding(
+                padding: const EdgeInsets.all(4),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.05) : Colors.white.withOpacity(0.06),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  child: Icon(Icons.chevron_right, color: (widget.mode == ColorMode.light) ? Colors.black.withOpacity(0.6) : Colors.white70),
+                ),
               ),
             ),
           ],

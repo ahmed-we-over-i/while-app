@@ -38,8 +38,8 @@ class _TimerScreenState extends State<TimerScreen> {
 
   bool changeBlocked = false;
 
-  void blockChange() {
-    changeBlocked = true;
+  void blockChange(bool value) {
+    changeBlocked = value;
   }
 
   void _positionAdjust() {
@@ -108,7 +108,7 @@ class _TimerScreenState extends State<TimerScreen> {
   void didChangeDependencies() async {
     super.didChangeDependencies();
 
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
@@ -122,6 +122,7 @@ class _TimerScreenState extends State<TimerScreen> {
   @override
   void dispose() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
     _shouldAdjustPosition?.cancel();
     _scrollController.removeListener(_calculateCirclesAboveLine);
     _scrollController.removeListener(_positionAdjust);
