@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:while_app/presentation/screens/enums.dart';
-import 'package:while_app/presentation/screens/sounds.dart';
+import 'package:while_app/presentation/misc/enums.dart';
+import 'package:while_app/presentation/misc/sounds.dart';
 
 class Settings extends HiveObject {
   bool sound;

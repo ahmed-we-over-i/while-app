@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/misc/enums.dart';
 
 class CustomTheme {
   final Color backgroundColor;

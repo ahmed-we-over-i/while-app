@@ -2,17 +2,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wakelock/wakelock.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
 import 'package:while_app/presentation/screens/timer/misc/constants.dart';
-import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/misc/enums.dart';
 import 'package:while_app/presentation/screens/timer/misc/functions.dart';
 import 'package:while_app/presentation/screens/timer/widgets/backgroundWidget.dart';
 import 'package:while_app/presentation/screens/timer/widgets/bottomOverlay.dart';
 import 'package:while_app/presentation/screens/timer/widgets/circleList.dart';
 import 'package:while_app/presentation/screens/timer/widgets/floatingButton.dart';
-import 'package:while_app/presentation/screens/timer/widgets/timerLoadedOverlay.dart';
-import 'package:while_app/presentation/screens/timer/widgets/timerLoadingOverlay.dart';
+import 'package:while_app/presentation/screens/timer/timerLoaded/timerLoadedOverlay.dart';
+import 'package:while_app/presentation/screens/timer/timerLoading/timerLoadingOverlay.dart';
 import 'package:while_app/presentation/screens/timer/widgets/timerTexts.dart';
 import 'package:while_app/presentation/screens/timer/misc/variables.dart';
 
@@ -108,7 +109,7 @@ class _TimerScreenState extends State<TimerScreen> {
   void didChangeDependencies() async {
     super.didChangeDependencies();
 
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
@@ -117,6 +118,10 @@ class _TimerScreenState extends State<TimerScreen> {
       _scrollController.addListener(_calculateCirclesAboveLine);
       _scrollController.position.isScrollingNotifier.addListener(_positionAdjust);
     });
+
+    Wakelock.enable();
+
+    await getNotificationPermissions();
   }
 
   @override

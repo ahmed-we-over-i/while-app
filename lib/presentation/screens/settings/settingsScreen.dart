@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/presentation/screens/settings/widgets/settingsScreenOption.dart';
-import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/misc/enums.dart';
 import 'package:while_app/presentation/widgets/customAppBar.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SettingScreen> createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
+  @override
+  void didChangeDependencies() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

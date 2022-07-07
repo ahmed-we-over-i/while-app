@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:while_app/presentation/extensions.dart';
-import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/misc/enums.dart';
+import 'package:while_app/presentation/misc/extensions.dart';
 import 'package:while_app/presentation/screens/settings/widgets/colorPickerWidget.dart';
 import 'package:while_app/presentation/screens/settings/widgets/displayCard.dart';
 import 'package:while_app/presentation/widgets/myDivider.dart';

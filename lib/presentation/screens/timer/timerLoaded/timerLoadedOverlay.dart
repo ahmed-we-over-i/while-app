@@ -1,14 +1,21 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:while_app/data/models/settings.dart';
 import 'package:while_app/logic/session/session_bloc.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
 import 'package:while_app/presentation/screens/timer/designs/circle.dart';
-import 'package:while_app/presentation/screens/colors.dart';
+import 'package:while_app/presentation/misc/colors.dart';
+import 'package:while_app/presentation/screens/timer/misc/functions.dart';
 import 'package:while_app/presentation/screens/timer/misc/variables.dart';
-import 'package:workmanager/workmanager.dart';
+import 'package:while_app/presentation/screens/timer/timerLoaded/backFromPause.dart';
+
+enum OverlayType {
+  firstTransition,
+  backFromPause,
+  normal,
+}
 
 class TimerLoadedOverlay extends StatefulWidget {
   const TimerLoadedOverlay({Key? key, required this.height, required this.scrollController, required this.blockChange}) : super(key: key);
@@ -30,12 +37,12 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
 
   late int secondsRemaining;
 
-  final ValueNotifier _firstTransition = ValueNotifier(true);
+  final ValueNotifier<OverlayType> _overlayType = ValueNotifier(OverlayType.normal);
   late final AnimationController _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
 
   _onAnimationComplete() {
     if (_animationController.isCompleted) {
-      _firstTransition.value = true;
+      if (_overlayType.value != OverlayType.backFromPause) _overlayType.value = OverlayType.normal;
       _animationController.reset();
     }
   }
@@ -61,7 +68,7 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
   _restartTimer() {
     setState(() {
       secondsRemaining = 60;
-      _firstTransition.value = false;
+      _overlayType.value = OverlayType.firstTransition;
     });
 
     countdownValue--;
@@ -76,10 +83,23 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
           secondsRemaining--;
         });
       } else {
-        print("here");
         context.read<SessionBloc>().add(SessionIncrementEvent());
         _restartTimer();
       }
+    });
+  }
+
+  int bfpMinutes = 0;
+  int bfpSeconds = 0;
+
+  backFromPauseRunner({required minutes, required seconds}) async {
+    bfpMinutes = minutes;
+    bfpSeconds = seconds;
+
+    _overlayType.value = OverlayType.backFromPause;
+
+    Future.delayed(Duration(seconds: 2), () {
+      _overlayType.value = OverlayType.normal;
     });
   }
 
@@ -109,28 +129,26 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
     if (state == AppLifecycleState.paused) {
       countdownTimer?.cancel();
 
-      // final Duration _duration = finishingTime.difference(DateTime.now());
+      final state = context.read<SettingsBloc>().state;
 
-      // final state = context.read<SettingsBloc>().state;
-
-      // if (state is SettingsLoadedState) {
-      //   Workmanager().registerOneOffTask("taskCall", "task", initialDelay: Duration(seconds: 1), inputData: {
-      //     'sound': state.settings.sound,
-      //     'vibration': state.settings.vibration,
-      //     'chime': state.settings.endChime,
-      //   });
-      // }
+      if (state is SettingsLoadedState) {
+        startNotification(sound: state.settings.sound, vibration: state.settings.vibration, chime: state.settings.endChime, scheduled: finishingTime);
+      }
     }
     if (state == AppLifecycleState.resumed) {
-      // Workmanager().cancelAll();
+      stopNotifications();
 
       int timeDifference = finishingTime.difference(DateTime.now()).inSeconds;
+
+      if (timeDifference < 0) timeDifference = 0;
 
       secondsRemaining = timeDifference % 60;
 
       final int newCountdownValue = (timeDifference / 60).ceil() - 1;
 
       context.read<SessionBloc>().add(SessionIncrementEvent(num: countdownValue - newCountdownValue));
+
+      if (newCountdownValue != countdownValue) backFromPauseRunner(minutes: max(0, (countdownValue - newCountdownValue) - 1), seconds: secondsRemaining);
 
       bool hasChanged = (countdownValue != newCountdownValue);
 
@@ -158,15 +176,17 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
 
   @override
   Widget build(BuildContext context) {
+    // return BackFromPause(minutes: 2, seconds: 30, color: Colors.white, height: widget.height);
+
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
         if (state is SettingsLoadedState) {
           CustomTheme customTheme = GetColors(state.settings.theme, state.settings.mode);
 
           return ValueListenableBuilder(
-            valueListenable: _firstTransition,
+            valueListenable: _overlayType,
             builder: (context, value, child) {
-              if (value == false) {
+              if (value == OverlayType.firstTransition) {
                 return AnimatedBuilder(
                   animation: _animationController,
                   builder: (context, child) {
@@ -176,6 +196,9 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
                     );
                   },
                 );
+              }
+              if (value == OverlayType.backFromPause) {
+                return BackFromPause(minutes: bfpMinutes, seconds: bfpSeconds, color: customTheme.foregroundColor, height: widget.height);
               }
               return SizedBox(
                 width: double.infinity,

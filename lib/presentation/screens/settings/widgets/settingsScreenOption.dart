@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/presentation/screens/settings/displayScreen.dart';
-import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/misc/enums.dart';
 import 'package:while_app/presentation/screens/settings/feedbackScreen.dart';
 import 'package:while_app/presentation/screens/settings/timerControlsScreen.dart';
 import 'package:while_app/presentation/widgets/myDivider.dart';

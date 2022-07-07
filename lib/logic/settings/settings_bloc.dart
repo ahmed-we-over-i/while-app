@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:while_app/data/models/settings.dart';
 import 'package:while_app/data/repositories/settingsRepository.dart';
-import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/misc/enums.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';

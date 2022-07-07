@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
-import 'package:while_app/presentation/extensions.dart';
-import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/misc/enums.dart';
+import 'package:while_app/presentation/misc/extensions.dart';
 import 'package:while_app/presentation/widgets/MyDivider.dart';
 import 'package:while_app/presentation/widgets/customAppBar.dart';
 

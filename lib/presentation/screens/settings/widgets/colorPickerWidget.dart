@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
-import 'package:while_app/presentation/screens/colors.dart';
-import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/misc/colors.dart';
+import 'package:while_app/presentation/misc/enums.dart';
 
 class ColorPickerWidget extends StatefulWidget {
   const ColorPickerWidget({Key? key, required this.mode, required this.theme}) : super(key: key);

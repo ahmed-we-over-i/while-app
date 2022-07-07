@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:while_app/logic/history/history_bloc.dart';
-import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/misc/enums.dart';
 import 'package:while_app/presentation/widgets/myDivider.dart';
 
 class CalendarWidget extends StatefulWidget {
@@ -121,7 +121,99 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           child: BlocBuilder<HistoryBloc, HistoryState>(
             builder: (context, state) {
               return TableCalendar(
-                calendarBuilders: CalendarBuilders(),
+                calendarBuilders: CalendarBuilders(
+                  todayBuilder: (context, day, focusedDay) {
+                    return Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white),
+                      ),
+                      child: Text(
+                        day.day.toString(),
+                        style: TextStyle(
+                          color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                          fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w400 : FontWeight.w300,
+                          fontSize: 12,
+                        ),
+                      ),
+                    );
+                  },
+                  selectedBuilder: (context, day, focusedDay) {
+                    return Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white),
+                      ),
+                      child: Text(
+                        day.day.toString(),
+                        style: TextStyle(
+                          color: (widget.mode == ColorMode.light) ? Colors.white : Colors.black87,
+                          fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w400 : FontWeight.w500,
+                          fontSize: 12,
+                        ),
+                      ),
+                    );
+                  },
+                  holidayBuilder: (context, day, focusedDay) {
+                    final _oneAfter = DateTime(day.year, day.month, day.day).add(Duration(days: 1));
+                    final _oneBefore = DateTime(day.year, day.month, day.day).subtract(Duration(days: 1));
+
+                    if (state is HistoryLoadedState && (state.history.containsKey(_oneAfter) || state.history.containsKey(_oneBefore))) {
+                      return Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(top: 4, bottom: 4, right: state.history.containsKey(_oneAfter) ? 0 : 8, left: state.history.containsKey(_oneBefore) ? 0 : 8),
+                        padding: EdgeInsets.only(left: state.history.containsKey(_oneAfter) ? 0 : 8, right: state.history.containsKey(_oneBefore) ? 0 : 8),
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border(
+                            bottom: BorderSide(width: 2.5, color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white),
+                            top: BorderSide(width: 2.5, color: Colors.transparent),
+                          ),
+                        ),
+                        child: Text(
+                          day.day.toString(),
+                          style: TextStyle(
+                            color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                            fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w400 : FontWeight.w300,
+                            fontSize: 14,
+                          ),
+                        ),
+                      );
+                    }
+
+                    return Container(
+                      alignment: Alignment.center,
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
+                        clipBehavior: Clip.none,
+                        children: [
+                          Text(
+                            day.day.toString(),
+                            style: TextStyle(
+                              color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                              fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w400 : FontWeight.w300,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Positioned(
+                            bottom: -12,
+                            child: Container(
+                              width: 6,
+                              height: 6,
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
                 firstDay: min,
                 lastDay: max,
                 focusedDay: current,
@@ -134,30 +226,18 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   weekdayStyle: TextStyle(
                     fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w500 : FontWeight.w500,
                     color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                    fontSize: 14,
                   ),
                   weekendStyle: TextStyle(
                     fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w500 : FontWeight.w400,
                     color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
+                    fontSize: 14,
                   ),
                 ),
                 headerVisible: false,
                 rowHeight: 50,
                 daysOfWeekHeight: 45,
                 calendarStyle: CalendarStyle(
-                  todayDecoration: BoxDecoration(
-                    color: Colors.transparent,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white),
-                  ),
-                  selectedDecoration: BoxDecoration(
-                    color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white),
-                  ),
-                  todayTextStyle: TextStyle(
-                    color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
-                    fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w400 : FontWeight.w300,
-                  ),
                   defaultTextStyle: TextStyle(
                     color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
                     fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w400 : FontWeight.w300,
@@ -166,31 +246,21 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                     color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
                     fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w400 : FontWeight.w300,
                   ),
-                  selectedTextStyle: TextStyle(
-                    color: (widget.mode == ColorMode.light) ? Colors.white : Colors.black87,
-                    fontWeight: (widget.mode == ColorMode.light) ? FontWeight.w400 : FontWeight.w500,
-                  ),
                   outsideDaysVisible: false,
-                  markerDecoration: BoxDecoration(
-                    color: (widget.mode == ColorMode.light) ? Colors.black87 : Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  markerSizeScale: 0.15,
-                  markersAnchor: 1,
-                  markersMaxCount: 1,
                 ),
-                selectedDayPredicate: (datetime) => datetime.year == selected.year && datetime.month == selected.month && datetime.day == selected.day,
                 onDaySelected: (_, datetime) {
                   onSelectedChanged(DateTime(datetime.year, datetime.month, datetime.day));
                 },
                 onPageChanged: _pageChange,
-                eventLoader: (datetime) {
+                selectedDayPredicate: (datetime) => datetime.year == selected.year && datetime.month == selected.month && datetime.day == selected.day,
+                holidayPredicate: (datetime) {
                   final _datetime = DateTime(datetime.year, datetime.month, datetime.day);
 
                   if (_datetime != current && state is HistoryLoadedState && state.history.containsKey(_datetime)) {
-                    return state.history[_datetime]!.values.toList();
+                    return true;
                   }
-                  return [];
+
+                  return false;
                 },
               );
             },

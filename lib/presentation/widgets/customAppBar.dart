@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/misc/enums.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   const CustomAppBar({Key? key, required this.mode, required this.text}) : super(key: key);
@@ -10,32 +10,31 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(55),
-      child: SizedBox(
-        height: 55,
-        child: CupertinoNavigationBar(
-          leading: Material(
-            color: Colors.transparent,
-            child: IconButton(
-              icon: Icon(Icons.close, size: 18, color: (mode == ColorMode.light) ? Colors.grey : Colors.white70),
-              onPressed: () => Navigator.of(context).pop(),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-            ),
-          ),
-          middle: Text(
-            text,
-            style: TextStyle(color: (mode == ColorMode.light) ? Colors.black87 : Colors.white, fontWeight: (mode == ColorMode.light) ? FontWeight.w500 : FontWeight.w400),
-          ),
-          padding: const EdgeInsetsDirectional.only(top: 5, start: 10, end: 10),
-          backgroundColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
-          border: Border(bottom: BorderSide(width: 0.4, color: (mode == ColorMode.light) ? Colors.grey : Colors.white30)),
+    return AppBar(
+      leading: IconButton(
+        icon: Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: Icon(Icons.close, size: 18, color: (mode == ColorMode.light) ? Colors.grey : Colors.white70),
+        ),
+        onPressed: () => Navigator.of(context).pop(),
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+      ),
+      centerTitle: true,
+      title: Text(
+        text,
+        style: TextStyle(
+          color: (mode == ColorMode.light) ? Colors.black87 : Colors.white,
+          fontWeight: (mode == ColorMode.light) ? FontWeight.w500 : FontWeight.w400,
+          fontSize: 16,
         ),
       ),
+      backgroundColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
+      shadowColor: (mode == ColorMode.light) ? Colors.black54 : Colors.white54,
+      elevation: 0.5,
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(55);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

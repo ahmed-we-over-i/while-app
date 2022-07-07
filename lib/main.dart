@@ -7,15 +7,14 @@ import 'package:while_app/logic/session/session_bloc.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:while_app/presentation/bgService.dart';
+import 'package:while_app/presentation/screens/timer/misc/functions.dart';
 import 'package:while_app/presentation/screens/timer/timerScreen.dart';
-import 'package:workmanager/workmanager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
 
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  await initializeNotification();
 
   runApp(const MyApp());
 }

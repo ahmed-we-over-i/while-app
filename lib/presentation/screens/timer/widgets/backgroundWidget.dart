@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
-import 'package:while_app/presentation/screens/colors.dart';
+import 'package:while_app/presentation/misc/colors.dart';
 
 class BackgroundWidget extends StatelessWidget {
   const BackgroundWidget({

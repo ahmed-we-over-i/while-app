@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:while_app/presentation/screens/colors.dart';
-import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/misc/colors.dart';
+import 'package:while_app/presentation/misc/enums.dart';
 
 class DisplayCard extends StatelessWidget {
   const DisplayCard({Key? key, required this.height, required this.width, required this.mode, required this.text, required this.theme, required this.cardMode}) : super(key: key);

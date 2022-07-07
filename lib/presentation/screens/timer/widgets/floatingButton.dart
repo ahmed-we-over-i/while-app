@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/presentation/screens/history/historyScreen.dart';
 import 'package:while_app/presentation/screens/settings/settingsScreen.dart';
-import 'package:while_app/presentation/screens/colors.dart';
-import 'package:while_app/presentation/screens/enums.dart';
+import 'package:while_app/presentation/misc/colors.dart';
+import 'package:while_app/presentation/misc/enums.dart';
 
 class FloatingButton extends StatefulWidget {
   const FloatingButton({Key? key, required this.menuValue}) : super(key: key);
@@ -40,8 +40,8 @@ class _FloatingButtonState extends State<FloatingButton> with SingleTickerProvid
             valueListenable: widget.menuValue,
             builder: (context, value, __) {
               return Positioned(
-                right: 30,
-                bottom: 30,
+                right: 25,
+                bottom: 25,
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 300),
                   opacity: (value != MenuValue.hidden) ? 1 : 0,
@@ -51,10 +51,15 @@ class _FloatingButtonState extends State<FloatingButton> with SingleTickerProvid
                       AnimatedBuilder(
                         animation: _animation,
                         builder: (context, _) => GestureDetector(
-                          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingScreen())),
+                          onTap: () {
+                            widget.menuValue.value = MenuValue.closed;
+                            _menuController.reverse();
+
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingScreen()));
+                          },
                           behavior: HitTestBehavior.translucent,
                           child: Padding(
-                            padding: const EdgeInsets.all(7),
+                            padding: const EdgeInsets.all(12),
                             child: Container(
                               decoration: BoxDecoration(color: myColor.withOpacity(_animation.value * bgOpacity), borderRadius: BorderRadius.circular(30)),
                               width: 38,
@@ -68,10 +73,15 @@ class _FloatingButtonState extends State<FloatingButton> with SingleTickerProvid
                       AnimatedBuilder(
                         animation: _animation,
                         builder: (context, _) => GestureDetector(
-                          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HistoryScreen())),
+                          onTap: () {
+                            widget.menuValue.value = MenuValue.closed;
+                            _menuController.reverse();
+
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HistoryScreen()));
+                          },
                           behavior: HitTestBehavior.translucent,
                           child: Padding(
-                            padding: const EdgeInsets.all(7),
+                            padding: const EdgeInsets.all(12),
                             child: Container(
                               decoration: BoxDecoration(color: myColor.withOpacity(_animation.value * bgOpacity), borderRadius: BorderRadius.circular(30)),
                               margin: EdgeInsets.only(bottom: _animation.value * (45 + 12)),
@@ -94,7 +104,7 @@ class _FloatingButtonState extends State<FloatingButton> with SingleTickerProvid
                           }
                         },
                         child: Padding(
-                          padding: const EdgeInsets.all(7),
+                          padding: const EdgeInsets.all(12),
                           child: Container(
                             decoration: BoxDecoration(
                               color: myColor.withOpacity(bgOpacity),
