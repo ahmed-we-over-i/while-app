@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/presentation/misc/enums.dart';
 import 'package:while_app/presentation/misc/extensions.dart';
-import 'package:while_app/presentation/widgets/MyDivider.dart';
+import 'package:while_app/presentation/widgets/MyCustomDivider.dart';
 import 'package:while_app/presentation/widgets/customAppBar.dart';
 
 class FeedbackScreen extends StatelessWidget {
@@ -107,7 +107,7 @@ class FeedbackScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 40),
-                  MyDivider(mode: mode),
+                  MyCustomDivider(mode: mode),
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
@@ -141,7 +141,7 @@ class FeedbackScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  MyDivider(mode: mode),
+                  MyCustomDivider(mode: mode),
                   SizedBox(height: 40),
                   ValueListenableBuilder(
                     valueListenable: isFilled,

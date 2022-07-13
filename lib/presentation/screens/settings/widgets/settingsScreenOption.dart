@@ -6,7 +6,7 @@ import 'package:while_app/presentation/screens/settings/displayScreen.dart';
 import 'package:while_app/presentation/misc/enums.dart';
 import 'package:while_app/presentation/screens/settings/feedbackScreen.dart';
 import 'package:while_app/presentation/screens/settings/timerControlsScreen.dart';
-import 'package:while_app/presentation/widgets/myDivider.dart';
+import 'package:while_app/presentation/widgets/myCustomDivider.dart';
 
 class SettingsScreenOptions extends StatelessWidget {
   const SettingsScreenOptions({Key? key}) : super(key: key);
@@ -85,7 +85,7 @@ class SettingsScreenOptions extends StatelessWidget {
           return Column(
             children: [
               const SizedBox(height: 45),
-              MyDivider(mode: mode),
+              MyCustomDivider(mode: mode),
               ListTile(
                 leading: Text("Sound", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                 tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
@@ -100,7 +100,7 @@ class SettingsScreenOptions extends StatelessWidget {
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
               ),
-              MyDivider(mode: mode),
+              MyCustomDivider(mode: mode),
               ListTile(
                 leading: Text("Vibration", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                 tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
@@ -115,7 +115,7 @@ class SettingsScreenOptions extends StatelessWidget {
                 ),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
               ),
-              MyDivider(mode: mode),
+              MyCustomDivider(mode: mode),
               ListTile(
                 leading: Text("Light or Dark", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                 tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
@@ -126,9 +126,9 @@ class SettingsScreenOptions extends StatelessWidget {
                 contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
                 onTap: () => _buildModePicker(context, state.settings.mode.index, mode),
               ),
-              MyDivider(mode: mode),
+              MyCustomDivider(mode: mode),
               const SizedBox(height: 35),
-              MyDivider(mode: mode),
+              MyCustomDivider(mode: mode),
               ListTile(
                 title: Text("Color and Graphics", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                 subtitle: Padding(
@@ -142,7 +142,7 @@ class SettingsScreenOptions extends StatelessWidget {
                   Navigator.of(context).push(MaterialPageRoute<void>(builder: (BuildContext context) => const DisplayScreen()));
                 },
               ),
-              MyDivider(mode: mode),
+              MyCustomDivider(mode: mode),
               ListTile(
                 title: Text("Intervals and Chimes", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                 subtitle: Padding(
@@ -156,9 +156,9 @@ class SettingsScreenOptions extends StatelessWidget {
                   Navigator.of(context).push(MaterialPageRoute<void>(builder: (BuildContext context) => const TimerControlsScreen()));
                 },
               ),
-              MyDivider(mode: mode),
+              MyCustomDivider(mode: mode),
               const SizedBox(height: 35),
-              MyDivider(mode: mode),
+              MyCustomDivider(mode: mode),
               ListTile(
                 leading: Text("Feedback", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                 tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
@@ -167,13 +167,13 @@ class SettingsScreenOptions extends StatelessWidget {
                   Navigator.of(context).push(MaterialPageRoute<void>(builder: (BuildContext context) => FeedbackScreen()));
                 },
               ),
-              MyDivider(mode: mode),
+              MyCustomDivider(mode: mode),
               ListTile(
                 leading: Text("Privacy", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                 tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                 contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 6),
               ),
-              MyDivider(mode: mode),
+              MyCustomDivider(mode: mode),
               const SizedBox(height: 45),
             ],
           );

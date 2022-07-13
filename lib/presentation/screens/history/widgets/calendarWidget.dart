@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:while_app/logic/history/history_bloc.dart';
 import 'package:while_app/presentation/misc/enums.dart';
-import 'package:while_app/presentation/widgets/myDivider.dart';
+import 'package:while_app/presentation/widgets/myCustomDivider.dart';
 
 class CalendarWidget extends StatefulWidget {
   final ColorMode mode;
@@ -114,7 +114,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             ),
           ],
         ),
-        MyDivider(mode: widget.mode),
+        MyCustomDivider(mode: widget.mode),
         Container(
           color: (widget.mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
           padding: EdgeInsets.only(top: 16, bottom: 14, left: 10, right: 10),
@@ -266,7 +266,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             },
           ),
         ),
-        MyDivider(mode: widget.mode),
+        MyCustomDivider(mode: widget.mode),
       ],
     );
   }

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:while_app/logic/history/history_bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:while_app/presentation/misc/enums.dart';
-import 'package:while_app/presentation/widgets/myDivider.dart';
+import 'package:while_app/presentation/widgets/myCustomDivider.dart';
 
 class SessionsListWidget extends StatelessWidget {
   final ColorMode mode;
@@ -25,7 +25,7 @@ class SessionsListWidget extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  MyDivider(mode: mode),
+                  MyCustomDivider(mode: mode),
                   Container(
                     color: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
                     padding: const EdgeInsets.all(20),
@@ -37,7 +37,7 @@ class SessionsListWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  MyDivider(mode: mode),
+                  MyCustomDivider(mode: mode),
                   if (state.sessions.isNotEmpty)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +46,7 @@ class SessionsListWidget extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 20, top: 25, bottom: 14),
                           child: Text('Sessions', style: TextStyle(color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                         ),
-                        MyDivider(mode: mode),
+                        MyCustomDivider(mode: mode),
                         ...state.sessions.keys.map((key) {
                           final int wTotal = state.sessions[key] ?? 0;
                           final int wHours = (wTotal / 60).floor();
@@ -65,7 +65,7 @@ class SessionsListWidget extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              MyDivider(mode: mode),
+                              MyCustomDivider(mode: mode),
                             ],
                           );
                         }).toList(),

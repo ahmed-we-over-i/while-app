@@ -1,17 +1,5 @@
-enum MenuValue {
-  hidden,
-  closed,
-  open,
-}
+enum MenuValue { hidden, closed, open }
 
-enum ColorTheme {
-  grey,
-  blue,
-  yellow,
-  red,
-}
+enum ColorTheme { grey, blue, yellow, red }
 
-enum ColorMode {
-  light,
-  dark,
-}
+enum ColorMode { light, dark }

@@ -4,7 +4,7 @@ import 'package:while_app/presentation/misc/enums.dart';
 import 'package:while_app/presentation/misc/extensions.dart';
 import 'package:while_app/presentation/screens/settings/widgets/colorPickerWidget.dart';
 import 'package:while_app/presentation/screens/settings/widgets/displayCard.dart';
-import 'package:while_app/presentation/widgets/myDivider.dart';
+import 'package:while_app/presentation/widgets/myCustomDivider.dart';
 
 class DisplayAppearances extends StatelessWidget {
   final ColorMode mode;
@@ -50,7 +50,7 @@ class DisplayAppearances extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16),
-          MyDivider(mode: mode),
+          MyCustomDivider(mode: mode),
           ListTile(
             title: Text("Color", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
             tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
@@ -65,7 +65,7 @@ class DisplayAppearances extends StatelessWidget {
             ),
             onTap: () => _buildThemePicker(context),
           ),
-          MyDivider(mode: mode),
+          MyCustomDivider(mode: mode),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             child: Text(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:while_app/presentation/misc/enums.dart';
 
-class MyDivider extends StatelessWidget {
-  const MyDivider({Key? key, required this.mode}) : super(key: key);
+class MyCustomDivider extends StatelessWidget {
+  const MyCustomDivider({Key? key, required this.mode}) : super(key: key);
 
   final ColorMode mode;
 

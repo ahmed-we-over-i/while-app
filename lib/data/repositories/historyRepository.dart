@@ -28,16 +28,30 @@ class HistoryRepository {
     return _history[dateTime] ?? {};
   }
 
-  Future<void> _save(DateTime datetime, int minutes) async {
+  bool sessionGoingOn = false;
+  DateTime? currentSession;
+
+  Future<void> _save(int minutes) async {
     await fetchHistory();
 
-    final DateTime day = DateTime(datetime.year, datetime.month, datetime.day);
+    if (!sessionGoingOn) {
+      sessionGoingOn = true;
+      final now = DateTime.now();
+
+      currentSession = DateTime(now.year, now.month, now.day, now.hour, now.minute);
+    }
+
+    final DateTime day = DateTime(currentSession!.year, currentSession!.month, currentSession!.day);
 
     if (!_history.containsKey(day)) {
       _history[day] = {};
     }
 
-    _history[day]![datetime] = minutes;
+    if (_history[day]!.containsKey(currentSession!)) {
+      _history[day]![currentSession!] = _history[day]![currentSession!]! + minutes;
+    } else {
+      _history[day]![currentSession!] = minutes;
+    }
 
     var box = await Hive.openBox('myBox');
     box.put('history', _history);
@@ -45,7 +59,16 @@ class HistoryRepository {
 
   addToHistory(int minutes) async {
     if (minutes > 0) {
-      await _save(DateTime.now(), minutes);
+      await _save(minutes);
     }
+
+    print(_history);
+  }
+
+  endSession() {
+    sessionGoingOn = false;
+    currentSession = null;
+
+    print("session ended");
   }
 }

@@ -5,7 +5,7 @@ import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/presentation/misc/enums.dart';
 import 'package:while_app/presentation/misc/sounds.dart';
 import 'package:while_app/presentation/widgets/customAppBar.dart';
-import 'package:while_app/presentation/widgets/myDivider.dart';
+import 'package:while_app/presentation/widgets/myCustomDivider.dart';
 
 class TimerControlsScreen extends StatelessWidget {
   const TimerControlsScreen({Key? key}) : super(key: key);
@@ -151,7 +151,7 @@ class TimerControlsScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: 45),
-                    MyDivider(mode: mode),
+                    MyCustomDivider(mode: mode),
                     ListTile(
                       title: Text("Warmup", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                       subtitle: Padding(
@@ -170,7 +170,7 @@ class TimerControlsScreen extends StatelessWidget {
                         thumbColor: (mode == ColorMode.light) ? Colors.white : Colors.black87,
                       ),
                     ),
-                    MyDivider(mode: mode),
+                    MyCustomDivider(mode: mode),
                     if (state.settings.warmup)
                       Column(
                         children: [
@@ -184,7 +184,7 @@ class TimerControlsScreen extends StatelessWidget {
                             contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 6),
                             onTap: () => _buildTimePicker(context, state.settings.timer, mode),
                           ),
-                          MyDivider(mode: mode),
+                          MyCustomDivider(mode: mode),
                           ListTile(
                             leading: Text("Chime", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                             tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
@@ -197,11 +197,11 @@ class TimerControlsScreen extends StatelessWidget {
                               _buildSoundPicker(context, state.settings.startChime, mode, true);
                             },
                           ),
-                          MyDivider(mode: mode),
+                          MyCustomDivider(mode: mode),
                         ],
                       ),
                     const SizedBox(height: 35),
-                    MyDivider(mode: mode),
+                    MyCustomDivider(mode: mode),
                     ListTile(
                       leading: Text("End of session chime", style: TextStyle(fontSize: 16, color: (mode == ColorMode.light) ? Colors.black87 : Colors.white)),
                       tileColor: (mode == ColorMode.light) ? Colors.white : Color(0xFF2A2A2A),
@@ -214,7 +214,7 @@ class TimerControlsScreen extends StatelessWidget {
                         _buildSoundPicker(context, state.settings.endChime, mode, false);
                       },
                     ),
-                    MyDivider(mode: mode),
+                    MyCustomDivider(mode: mode),
                     const SizedBox(height: 35),
                   ],
                 ),

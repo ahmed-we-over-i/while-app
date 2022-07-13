@@ -9,7 +9,8 @@ import 'package:while_app/presentation/screens/timer/designs/circle.dart';
 import 'package:while_app/presentation/misc/colors.dart';
 import 'package:while_app/presentation/screens/timer/misc/functions.dart';
 import 'package:while_app/presentation/screens/timer/misc/variables.dart';
-import 'package:while_app/presentation/screens/timer/timerLoaded/backFromPause.dart';
+import 'backFromPauseMinutes.dart';
+import 'backFromPauseSeconds.dart';
 
 enum OverlayType {
   firstTransition,
@@ -89,12 +90,14 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
     });
   }
 
-  int bfpMinutes = 0;
-  int bfpSeconds = 0;
+  int bfpSecondsBefore = 0;
+  int? bfpMinutes = null;
+  int bfpSecondsAfter = 0;
 
-  backFromPauseRunner({required minutes, required seconds}) async {
+  backFromPauseRunner({required int secondsBefore, int? minutes, required int secondsAfter}) async {
+    bfpSecondsBefore = secondsBefore;
     bfpMinutes = minutes;
-    bfpSeconds = seconds;
+    bfpSecondsAfter = secondsAfter;
 
     _overlayType.value = OverlayType.backFromPause;
 
@@ -142,13 +145,17 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
 
       if (timeDifference < 0) timeDifference = 0;
 
+      final int oldSecondsRemaining = secondsRemaining;
+
       secondsRemaining = timeDifference % 60;
 
       final int newCountdownValue = (timeDifference / 60).ceil() - 1;
 
       context.read<SessionBloc>().add(SessionIncrementEvent(num: countdownValue - newCountdownValue));
 
-      if (newCountdownValue != countdownValue) backFromPauseRunner(minutes: max(0, (countdownValue - newCountdownValue) - 1), seconds: secondsRemaining);
+      if (newCountdownValue != countdownValue)
+        backFromPauseRunner(secondsBefore: oldSecondsRemaining, minutes: max(0, (countdownValue - newCountdownValue) - 1), secondsAfter: secondsRemaining);
+      else if (secondsRemaining != oldSecondsRemaining) backFromPauseRunner(secondsBefore: oldSecondsRemaining, secondsAfter: secondsRemaining);
 
       bool hasChanged = (countdownValue != newCountdownValue);
 
@@ -176,8 +183,6 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
 
   @override
   Widget build(BuildContext context) {
-    // return BackFromPause(minutes: 2, seconds: 30, color: Colors.white, height: widget.height);
-
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
         if (state is SettingsLoadedState) {
@@ -198,8 +203,13 @@ class _TimerLoadedOverlayState extends State<TimerLoadedOverlay> with WidgetsBin
                 );
               }
               if (value == OverlayType.backFromPause) {
-                return BackFromPause(minutes: bfpMinutes, seconds: bfpSeconds, color: customTheme.foregroundColor, height: widget.height);
+                if (bfpMinutes != null)
+                  return BackFromPauseMinutes(
+                      secondsBefore: bfpSecondsBefore, minutes: bfpMinutes!, secondsAfter: bfpSecondsAfter, color: customTheme.foregroundColor, height: widget.height);
+                else
+                  return BackFromPauseSeconds(secondsBefore: bfpSecondsBefore, secondsAfter: bfpSecondsAfter, color: customTheme.foregroundColor, height: widget.height);
               }
+
               return SizedBox(
                 width: double.infinity,
                 child: CustomPaint(

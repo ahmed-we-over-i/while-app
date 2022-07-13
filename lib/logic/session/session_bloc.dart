@@ -12,17 +12,12 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       : _historyRepository = historyRepository,
         super(SessionInitialState()) {
     on<SessionIncrementEvent>((event, emit) {
-      if (state is SessionInitialState) {
-        emit(SessionOngoingState(minutes: event.num));
-      } else if (state is SessionOngoingState) {
-        emit(SessionOngoingState(minutes: (state as SessionOngoingState).minutes + event.num));
-      }
+      print("here1");
+      _historyRepository.addToHistory(event.num);
     });
     on<SessionEndEvent>((event, emit) {
-      if (state is SessionOngoingState) {
-        _historyRepository.addToHistory((state as SessionOngoingState).minutes);
-      }
-      emit(SessionInitialState());
+      print("here2");
+      _historyRepository.endSession();
     });
   }
 }

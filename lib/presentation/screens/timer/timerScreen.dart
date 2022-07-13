@@ -5,17 +5,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
+import 'package:while_app/presentation/screens/timer/layers/1floatingButton.dart';
+import 'package:while_app/presentation/screens/timer/layers/2timerTexts.dart';
+import 'package:while_app/presentation/screens/timer/layers/3bottomOverlay.dart';
+import 'package:while_app/presentation/screens/timer/layers/4circleList.dart';
+import 'package:while_app/presentation/screens/timer/layers/5backgroundWidget.dart';
 import 'package:while_app/presentation/screens/timer/misc/constants.dart';
 import 'package:while_app/presentation/misc/enums.dart';
 import 'package:while_app/presentation/screens/timer/misc/functions.dart';
-import 'package:while_app/presentation/screens/timer/widgets/backgroundWidget.dart';
-import 'package:while_app/presentation/screens/timer/widgets/bottomOverlay.dart';
-import 'package:while_app/presentation/screens/timer/widgets/circleList.dart';
-import 'package:while_app/presentation/screens/timer/widgets/floatingButton.dart';
-import 'package:while_app/presentation/screens/timer/timerLoaded/timerLoadedOverlay.dart';
-import 'package:while_app/presentation/screens/timer/timerLoading/timerLoadingOverlay.dart';
-import 'package:while_app/presentation/screens/timer/widgets/timerTexts.dart';
 import 'package:while_app/presentation/screens/timer/misc/variables.dart';
+import 'package:while_app/presentation/screens/timer/layers/0timerLoading/timerLoadingOverlay.dart';
+import 'package:while_app/presentation/screens/timer/layers/0timerLoaded/timerLoadedOverlay.dart';
 
 class TimerScreen extends StatefulWidget {
   const TimerScreen({Key? key}) : super(key: key);

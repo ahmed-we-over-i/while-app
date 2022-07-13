@@ -134,8 +134,6 @@ startNotification({required bool sound, required bool vibration, required String
     }
   }
 
-  print("here");
-
   AwesomeNotifications().createNotification(
     content: NotificationContent(id: 1, channelKey: key, title: 'Timer completed'),
     schedule: NotificationCalendar(
