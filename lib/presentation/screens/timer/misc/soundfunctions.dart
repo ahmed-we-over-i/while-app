@@ -120,6 +120,10 @@ Future<void> getNotificationPermissions() async {
   });
 }
 
+clearNotifications() async {
+  await AwesomeNotifications().cancelAll();
+}
+
 startNotification({required bool sound, required bool vibration, required String chime, required DateTime scheduled}) {
   String key = '';
 

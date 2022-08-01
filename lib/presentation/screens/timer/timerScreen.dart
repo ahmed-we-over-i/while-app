@@ -12,8 +12,8 @@ import 'package:while_app/presentation/screens/timer/layers/4circleList.dart';
 import 'package:while_app/presentation/screens/timer/layers/5backgroundWidget.dart';
 import 'package:while_app/presentation/screens/timer/misc/constants.dart';
 import 'package:while_app/presentation/misc/enums.dart';
-import 'package:while_app/presentation/screens/timer/misc/functions.dart';
-import 'package:while_app/presentation/screens/timer/misc/variables.dart';
+import 'package:while_app/presentation/screens/timer/misc/soundfunctions.dart';
+import 'package:while_app/presentation/screens/timer/misc/circlePositionFunctions.dart';
 import 'package:while_app/presentation/screens/timer/layers/0timerLoading/timerLoadingOverlay.dart';
 import 'package:while_app/presentation/screens/timer/layers/0timerLoaded/timerLoadedOverlay.dart';
 
@@ -122,6 +122,7 @@ class _TimerScreenState extends State<TimerScreen> {
     Wakelock.enable();
 
     await getNotificationPermissions();
+    await clearNotifications();
   }
 
   @override

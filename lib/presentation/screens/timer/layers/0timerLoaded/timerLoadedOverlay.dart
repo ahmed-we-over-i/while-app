@@ -7,8 +7,8 @@ import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
 import 'package:while_app/presentation/screens/timer/designs/circle.dart';
 import 'package:while_app/presentation/misc/colors.dart';
-import 'package:while_app/presentation/screens/timer/misc/functions.dart';
-import 'package:while_app/presentation/screens/timer/misc/variables.dart';
+import 'package:while_app/presentation/screens/timer/misc/soundfunctions.dart';
+import 'package:while_app/presentation/screens/timer/misc/circlePositionFunctions.dart';
 import 'backFromPauseMinutes.dart';
 import 'backFromPauseSeconds.dart';
 

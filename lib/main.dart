@@ -7,7 +7,7 @@ import 'package:while_app/logic/session/session_bloc.dart';
 import 'package:while_app/logic/settings/settings_bloc.dart';
 import 'package:while_app/logic/timer/timer_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:while_app/presentation/screens/timer/misc/functions.dart';
+import 'package:while_app/presentation/screens/timer/misc/soundfunctions.dart';
 import 'package:while_app/presentation/screens/timer/timerScreen.dart';
 
 void main() async {
